@@ -3,13 +3,12 @@
 
 //-----------------------------------------------------------
 // Query processing
-char specialChar[34] = { '+',',',';',' ',
-					'\t','\0','!','{',
-					'}','"','(',')','\f',
-					'\v','\n','\r','=',
-					'|','~','@','%', '&',
-					'<','>','/','[',']','?',
-					'`','^','_','\\','-', '.' };
+char specialChar[34] = { '+',',',';',' ','\t',
+						'\0','!','{', '}','"','(',
+						')','\f','\v','\n','\r','=',
+						'|','~','@','%', '&','<','>',
+						'/','[',']','?','`','^','_',
+						'\\','-', '.' };
 
 bool isCorrectChar(char& c, string& s) {
 	if (c == '-' && s == "")
@@ -43,7 +42,7 @@ vector<string> queryProcessing(string& input) {
 					word[i] += 32;
 				temp += word[i];
 				//inline operator and include stopword operator
-				if (temp == "inline:" || temp=="+") {
+				if (temp == "inline:" || temp=="+" || temp=="filetype:") {
 					res.push_back(temp);
 					temp.clear();
 				}
