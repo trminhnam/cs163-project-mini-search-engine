@@ -2,6 +2,8 @@
 #include "DataStructure.h"
 
 int main() {
+
+	//This main function is for testing input query
 	string s;
 	vector<string> query;
 	while (getline(cin, s)) {
@@ -10,6 +12,8 @@ int main() {
 			cout << "\"" << query[i] << "\"" << endl;
 		}
 	}
+	//----------------------------------------------
+
 
 	return 0;
 }
