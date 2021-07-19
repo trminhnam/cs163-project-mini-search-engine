@@ -2,7 +2,9 @@
 
 
 //-----------------------------------------------------------
-// Query processing
+
+
+// Check correct char
 char specialChar[34] = { '+',',',';',' ','\t',
 						'\0','!','{', '}','"','(',
 						')','\f','\v','\n','\r','=',
@@ -17,6 +19,8 @@ bool isCorrectChar(char& c, string& s) {
 		return true;
 	else if (c == '+' && s == "")
 		return true;
+	else if (c == '~' && s == "")
+		return true;
 	for (int i = 0; i < 34; i++) {
 		if (c == specialChar[i])
 			return false;
@@ -24,6 +28,10 @@ bool isCorrectChar(char& c, string& s) {
 	return true;
 }
 
+//--------------------------------------------------------------------
+
+
+// Query processing
 vector<string> queryProcessing(string& input) {
 	stringstream ss(input);
 	string word, temp;
@@ -41,8 +49,8 @@ vector<string> queryProcessing(string& input) {
 				if (word[i] >= 'A' && word[i] <= 'Z')
 					word[i] += 32;
 				temp += word[i];
-				//inline operator and include stopword operator
-				if (temp == "inline:" || temp=="+" || temp=="filetype:") {
+				//intitle operator, include stopword operator, filetype: operator, ~ operator
+				if (temp == "intitle:" || temp=="+" || temp=="filetype:" || temp=="~") {
 					res.push_back(temp);
 					temp.clear();
 				}
@@ -55,4 +63,8 @@ vector<string> queryProcessing(string& input) {
 		//cout << "\"" << res[i] << "\"" << endl;
 	return res;
 }
+
+
+//-------------------------------------------------------------------
+
 
