@@ -5,12 +5,12 @@
 
 
 // Check correct char
-char specialChar[34] = { '+',',',';',' ','\t',
+char specialChar[35] = { '+',',',';',' ','\t',
 						'\0','!','{', '}','"','(',
 						')','\f','\v','\n','\r','=',
 						'|','~','@','%', '&','<','>',
 						'/','[',']','?','`','^','_',
-						'\\','-', '.' };
+						'\\','-', '.', '\'' };
 
 bool isCorrectChar(char& c, string& s) {
 	if (c == '-' && s == "")
@@ -21,7 +21,7 @@ bool isCorrectChar(char& c, string& s) {
 		return true;
 	else if (c == '~' && s == "")
 		return true;
-	for (int i = 0; i < 34; i++) {
+	for (int i = 0; i < 35; i++) {
 		if (c == specialChar[i])
 			return false;
 	}
@@ -33,6 +33,7 @@ bool isCorrectChar(char& c, string& s) {
 
 // Query processing
 vector<string> queryProcessing(string& input) {
+	replace(input.begin(), input.end(), '-', ' ');
 	stringstream ss(input);
 	string word, temp;
 	vector<string> res;

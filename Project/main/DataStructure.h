@@ -29,11 +29,5 @@ void insertTrie(node*& root, string &s, int curArticle, int posInTitle); // Lonk
 void deleteTrie(node* root);
 
 
-//Load data
-
-
-
-//
-
 
 #endif // !_DATASTRUCTURE_H_
