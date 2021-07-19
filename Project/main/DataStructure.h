@@ -1,7 +1,10 @@
 #ifndef _DATASTRUCTURE_H_
 #define _DATASTRUCTURE_H_
 
+#include <iostream>
 #include <vector>
+
+using namespace std;
 
 struct node {
 	vector<int> title; // Which article has this keyword in title
@@ -13,5 +16,17 @@ struct node {
 		for (int i = 0; i < 40; i++) pNext[i] = nullptr;
 	}
 };
+
+//Trie functions
+
+void deleteTrie(node* root);
+
+
+//Load data
+
+
+
+//
+
 
 #endif // !_DATASTRUCTURE_H_
