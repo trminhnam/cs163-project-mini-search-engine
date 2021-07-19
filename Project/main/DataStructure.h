@@ -22,11 +22,5 @@ struct node {
 void deleteTrie(node* root);
 
 
-//Load data
-
-
-
-//
-
 
 #endif // !_DATASTRUCTURE_H_
