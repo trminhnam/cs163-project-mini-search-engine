@@ -7,6 +7,10 @@
 #include <vector>
 #include <sstream>
 #include <fstream>
+#include <algorithm>
+#include <queue>
+#include <stack>
+#include <utility>
 
 using namespace std;
 

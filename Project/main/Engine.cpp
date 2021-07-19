@@ -16,6 +16,8 @@ bool isCorrectChar(char& c, string& s) {
 		return true;
 	else if (c == ':' && s == "intitle")
 		return true;
+	else if (c == '+' && s == "")
+		return true;
 	for (int i = 0; i < 34; i++) {
 		if (c == specialChar[i])
 			return false;
@@ -40,10 +42,10 @@ vector<string> queryProcessing(string& input) {
 				if (word[i] >= 'A' && word[i] <= 'Z')
 					word[i] += 32;
 				temp += word[i];
-				//inline operator
-				if (temp == "inline:") {
+				//inline operator and include stopword operator
+				if (temp == "inline:" || temp=="+") {
+					res.push_back(temp);
 					temp.clear();
-					res.push_back("inline:");
 				}
 			}
 		}
