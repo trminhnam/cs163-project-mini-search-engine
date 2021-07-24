@@ -19,7 +19,7 @@ int _valChar(char c) {
 
 void insertTrie(node*& root, string &s) {
 	/*
-		Insert a into the trie rooted at trie
+		Insert a string into the trie
 		root: Root node of the Trie
 		string s: The word to be inserted
 	*/
@@ -37,7 +37,7 @@ void insertTrie(node*& root, string &s) {
 
 void insertTrie(node*& root, string &s, int curArticle) {
 	/*
-		Insert a into the trie rooted at trie
+		Insert a string into the trie
 		root: Root node of the Trie
 		string s: The word to be inserted
 		curARticle: The id of the current article that has string s in title
@@ -55,7 +55,7 @@ void insertTrie(node*& root, string &s, int curArticle) {
 
 void insertTrie(node*& root, string &s, int curArticle, int posInTitle) {
 	/*
-		Insert a into the trie rooted at trie
+		Insert a string into the trie
 		root: Root node of the Trie
 		string s: The word to be inserted
 		posInTitle: Position of the string, in the current article
@@ -73,7 +73,7 @@ void insertTrie(node*& root, string &s, int curArticle, int posInTitle) {
 
 void insertTrie(node*& root, string &s, string &synonym) {
 	/*
-		Insert a into the trie rooted at trie
+		Insert a string into the trie
 		root: Root node of the Trie
 		string s: The word to be inserted
 		string synonym: synonym of s
