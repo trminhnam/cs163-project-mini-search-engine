@@ -101,6 +101,11 @@ bool searchTrie(node* root, string &s) {
 	}
 }
 
+
+// Nem ngu ngok has written the below lines
+// use for seaching
+
+
 void deleteTrie(node* root) {
 	if (!root)
 		return;

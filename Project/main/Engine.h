@@ -23,6 +23,11 @@ bool isCorrectChar(char& c, string& s);
 vector<string> queryProcessing(string& input);
 
 
+vector<int> AndOperator(vector<int>& res, node* keywordNode);
+vector<int> OrOperator(vector<int>& res, node* keywordNode);
+vector<int> getIntersection(vector<int>& a, vector<int>& b);
+vector<int> getUnion(vector<int>& a, vector<int>& b);
+
 
 
 #endif // !_ENGINE_H_
