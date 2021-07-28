@@ -1,16 +1,16 @@
 #include "Engine.h"
-
+#include "DataStructure.h"
 
 //-----------------------------------------------------------
 
 
 // Check correct char
 char specialChar[35] = { '+',',',';',' ','\t',
-						'\0','!','{', '}','"','(',
-						')','\f','\v','\n','\r','=',
-						'|','~','@','%', '&','<','>',
-						'/','[',']','?','`','^','_',
-						'\\','-', '.', '\'' };
+						'\0','\f','\v','\n','\r',
+						'!','{', '}','"','(', ')',
+						'<','>','/','[',']','?','`',
+						'=','|','~','@','%', '&',
+						'^','_','\\','-', '.', '\'' };
 
 bool isCorrectChar(char& c, string& s) {
 	if (c == '-' && s == "")
@@ -32,8 +32,7 @@ bool isCorrectChar(char& c, string& s) {
 
 
 // Query processing
-vector<string> queryProcessing(string& input) {
-	replace(input.begin(), input.end(), '-', ' ');
+vector<string> inputQuery(string& input) {
 	stringstream ss(input);
 	string word, temp;
 	vector<string> res;
@@ -65,7 +64,55 @@ vector<string> queryProcessing(string& input) {
 	return res;
 }
 
+vector<int> AndOperator(vector<int>& res, node* keywordNode) {
+	vector<int> tmp;
+	if (keywordNode == nullptr)
+		return res;
+
+	int n = keywordNode->position.size();
+	for (int i = 0; i < n; i++) {
+		tmp.push_back(keywordNode->position[i].first);
+	}
+	res = getIntersection(res, tmp);
+	return res;
+}
+
+vector<int> OrOperator(vector<int>& res, node* keywordNode) {
+	vector<int> tmp;
+	if (keywordNode == nullptr)
+		return res;
+
+	int n = keywordNode->position.size();
+	for (int i = 0; i < n; i++) {
+		tmp.push_back(keywordNode->position[i].first);
+	}
+	res = getUnion(res, tmp);
+	return res;
+}
 
 //-------------------------------------------------------------------
+
+// For AND operator
+vector<int> getIntersection(vector<int>& a, vector<int>& b) {
+	sort(a.begin(), a.end());
+	sort(b.begin(), b.end());
+	vector<int> res(a.size() + b.size());
+
+	vector<int>::iterator itr = set_intersection(a.begin(), a.end(), b.begin(), b.end(), res.begin());
+	res.resize(itr - res.begin());
+	return res;
+}
+
+//For OR operator
+vector<int> getUnion(vector<int>& a, vector<int>& b) {
+	sort(a.begin(), a.end());
+	sort(b.begin(), b.end());
+	vector<int> res(a.size() + b.size());
+	
+	vector<int>::iterator itr = set_union(a.begin(), a.end(), b.begin(), b.end(), res.begin());
+	res.resize(itr - res.begin());
+	return res;
+}
+
 
 
