@@ -1,6 +1,7 @@
 #include "Engine.h"
 #include "DataStructure.h"
 
+
 //-----------------------------------------------------------
 
 
@@ -32,7 +33,7 @@ bool isCorrectChar(char& c, string& s) {
 
 
 // Query processing
-vector<string> inputQuery(string& input) {
+vector<string> queryProcessing(string& input) {
 	stringstream ss(input);
 	string word, temp;
 	vector<string> res;
@@ -114,6 +115,8 @@ vector<int> getUnion(vector<int>& a, vector<int>& b) {
 	return res;
 }
 
+//-----------------------------------------------------------
+
 // Load data into trie
 vector<string> _title;
 void loadData(node *root, node *rootSW, node *rootSYM) {
@@ -126,8 +129,9 @@ void loadData(node *root, node *rootSW, node *rootSYM) {
 		_title.push_back(title);
 		string tmp;
 		for (int i = 0; i < title.size(); i++) {
-			if ('a' <= title[i] && title[i] <= 'z' || title[i] == '$' || title[i] == '#' || title[i] == '\'') tmp += title[i];
-			else {
+			if ('a' <= title[i] && title[i] <= 'z' || title[i] == '$' || title[i] == '#') tmp += title[i];
+			else if ('A' <= title[i] && title[i] <= 'Z') tmp += char(title[i] - 'A' + 'a');
+			else if (title[i] == ' '){
 				insertTrie(root, tmp, _title.size() - 1); // insert title into the trie
 				tmp.clear();
 			}
@@ -139,8 +143,11 @@ void loadData(node *root, node *rootSW, node *rootSYM) {
 		int cur = 0;
 		while (fData >> data) {
 			string tmp;
-			for (int i = 0; i < data.size(); i++) if ('a' <= data[i] && data[i] <= 'z' || data[i] == '$' || data[i] == '#' || data[i] == '\'') tmp += data[i];
-			insertTrie(root, data, _title.size() - 1, cur++); // insert word into trie
+			for (int i = 0; i < data.size(); i++) {
+				if ('a' <= data[i] && data[i] <= 'z' || data[i] == '$' || data[i] == '#') tmp += data[i];
+				else if ('A' <= data[i] && data[i] <= 'Z') tmp += char(data[i] - 'A' + 'a');
+			}	
+			insertTrie(root, tmp, _title.size() - 1, cur++); // insert word into trie
 		}
 		fData.close();
 	}
@@ -148,8 +155,14 @@ void loadData(node *root, node *rootSW, node *rootSYM) {
 
 	ifstream fStopword("stopword.txt");
 	string stopword;
-	while (fStopword >> stopword)
-		insertTrie(rootSW, stopword); // insert stopword into trie		
+	while (fStopword >> stopword) {
+		string tmp;
+		for (int i = 0; i < tmp.size(); i++) {
+			if ('a' <= stopword[i] && stopword[i] <= 'z' || stopword[i] == '$' || stopword[i] == '#') tmp += stopword[i];
+			else if ('A' <= stopword[i] && stopword[i] <= 'Z') tmp += char(stopword[i] - 'A' + 'a');
+		}	
+		insertTrie(rootSW, tmp); // insert stopword into trie		
+	}
 	fStopword.close();
 
 	ifstream fSynonym("synonym.txt");
@@ -157,7 +170,11 @@ void loadData(node *root, node *rootSW, node *rootSYM) {
 	while (getline(fSynonym, synonym)) {
 		if (synonym[0] == '=') continue;
 		if (synonym[0] == 'K') { // Key
-			curKey = synonym.substr(5, synonym.size() - 5);
+			curKey.clear();
+			for (int i = 5; i < synonym.size(); i++) {
+				if ('a'	<= synonym[i] && synonym[i] <= 'z' || synonym[i] == '$' || synonym[i] == '#') curKey += synonym[i];
+				else if ('A' <= synonym[i] && synonym[i] <= 'Z') curKey += char(synonym[i] - 'A' + 'a');
+			}
 		}
 		else if (synonym[0] == 'S') {
 			string curSym;
@@ -166,7 +183,9 @@ void loadData(node *root, node *rootSW, node *rootSYM) {
 					insertTrie(rootSYM, curKey, curSym); // insert synonym of a word into trie				
 					curSym.clear();
 				}
-				else curSym += synonym[i];
+				else {
+					curSym += synonym[i];
+				}	
 			}
 			insertTrie(rootSYM, curKey, curSym);
 		}

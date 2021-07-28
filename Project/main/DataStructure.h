@@ -29,7 +29,7 @@ void insertTrie(node*& root, string &s); // for stopword trie
 void insertTrie(node*& root, string &s, int curArticle); // for word in title of article
 void insertTrie(node*& root, string &s, int curArticle, int posInTitle); // for word in article
 void insertTrie(node*& root, string &s, string& synonym); // for synonym trie
-bool searchTrie(node* root, string &s); 
+node* searchTrie(node* root, string &s); 
 void deleteTrie(node* root);
 
 

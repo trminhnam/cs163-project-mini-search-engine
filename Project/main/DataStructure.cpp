@@ -12,8 +12,6 @@ int _valChar(char c) {
 	if (c == '#') return cur;
 	cur++;
 	if (c == '$') return cur;
-	cur++;
-	if (c == '\'') return cur;
 
 	return 0;
 	// If reach this state, then c is lmao
@@ -25,7 +23,6 @@ void insertTrie(node*& root, string &s) {
 		root: Root node of the Trie
 		string s: The word to be inserted
 	*/
-	if (!root) root = new node();
 	node *cur = root;
 	for (int i = 0; i < s.size(); i++) {
 		char c = s[i]; int nxt = _valChar(c);
@@ -44,7 +41,6 @@ void insertTrie(node*& root, string &s, int curArticle) {
 		string s: The word to be inserted
 		curARticle: The id of the current article that has string s in title
 	*/
-	if (!root) root = new node();
 	node *cur = root;
 	for (int i = 0; i < s.size(); i++) {
 		char c = s[i]; int nxt = _valChar(c);
@@ -62,7 +58,6 @@ void insertTrie(node*& root, string &s, int curArticle, int posInTitle) {
 		string s: The word to be inserted
 		posInTitle: Position of the string, in the current article
 	*/
-	if (!root) root = new node();
 	node *cur = root;
 	for (int i = 0; i < s.size(); i++) {
 		char c = s[i]; int nxt = _valChar(c);
@@ -80,7 +75,6 @@ void insertTrie(node*& root, string &s, string &synonym) {
 		string s: The word to be inserted
 		string synonym: synonym of s
 	*/
-	if (!root) root = new node();
 	node *cur = root;
 	for (int i = 0; i < s.size(); i++) {
 		char c = s[i]; int nxt = _valChar(c);
@@ -91,18 +85,16 @@ void insertTrie(node*& root, string &s, string &synonym) {
 	}
 }
 
-bool searchTrie(node* root, string &s) {
-	if (!root) root = new node();
-	node *cur = root;
+node* searchTrie(node* root, string &s) {
+	node *cur = root;	
 	for (int i = 0; i < s.size(); i++) {
-		char c = s[i]; int nxt = _valChar(c);
-		if (!cur -> pNext[nxt]) return false;
+		char c=  s[i]; int nxt = _valChar(c);
+		if (!cur -> pNext[nxt]) return nullptr;
 		cur = cur -> pNext[nxt];
 
-		if (i == s.size() - 1) return true;		
+		if (i == s.size() - 1) return cur;
 	}
 }
-
 
 // Nem ngu ngok has written the below lines
 // use for seaching
