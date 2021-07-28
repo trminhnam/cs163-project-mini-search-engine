@@ -33,11 +33,6 @@ bool searchTrie(node* root, string &s);
 void deleteTrie(node* root);
 
 
-//Load data
-
-vector<string> _title; // Storing all the title
-void loadData(node *root, node *rootSW, node *rootSYM);
-
 //
 
 

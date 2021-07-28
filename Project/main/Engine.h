@@ -12,6 +12,8 @@
 #include <stack>
 #include <utility>
 
+#include "DataStructure.h"
+
 using namespace std;
 
 
@@ -28,6 +30,8 @@ vector<int> OrOperator(vector<int>& res, node* keywordNode);
 vector<int> getIntersection(vector<int>& a, vector<int>& b);
 vector<int> getUnion(vector<int>& a, vector<int>& b);
 
+//Load data
 
+void loadData(node *root, node *rootSW, node *rootSYM);
 
 #endif // !_ENGINE_H_

@@ -114,5 +114,63 @@ vector<int> getUnion(vector<int>& a, vector<int>& b) {
 	return res;
 }
 
+// Load data into trie
+vector<string> _title;
+void loadData(node *root, node *rootSW, node *rootSYM) {
+	// Load text data into trie
+	ifstream fTitle("Search-Engine-Data\\___index.txt");
+	assert(fTitle.is_open());
 
+	string title;
+	while (getline(fTitle, title)) {
+		_title.push_back(title);
+		string tmp;
+		for (int i = 0; i < title.size(); i++) {
+			if ('a' <= title[i] && title[i] <= 'z' || title[i] == '$' || title[i] == '#' || title[i] == '\'') tmp += title[i];
+			else {
+				insertTrie(root, tmp, _title.size() - 1); // insert title into the trie
+				tmp.clear();
+			}
+		}	
+		insertTrie(root, tmp, _title.size() - 1); // insert title into the trie
 
+		ifstream fData(title);
+		string data;
+		int cur = 0;
+		while (fData >> data) {
+			string tmp;
+			for (int i = 0; i < data.size(); i++) if ('a' <= data[i] && data[i] <= 'z' || data[i] == '$' || data[i] == '#' || data[i] == '\'') tmp += data[i];
+			insertTrie(root, data, _title.size() - 1, cur++); // insert word into trie
+		}
+		fData.close();
+	}
+	fTitle.close();
+
+	ifstream fStopword("stopword.txt");
+	string stopword;
+	while (fStopword >> stopword)
+		insertTrie(rootSW, stopword); // insert stopword into trie		
+	fStopword.close();
+
+	ifstream fSynonym("synonym.txt");
+	string synonym, curKey;
+	while (getline(fSynonym, synonym)) {
+		if (synonym[0] == '=') continue;
+		if (synonym[0] == 'K') { // Key
+			curKey = synonym.substr(5, synonym.size() - 5);
+		}
+		else if (synonym[0] == 'S') {
+			string curSym;
+			for (int i = 5; i < synonym.size(); i++) {
+				if (synonym[i] == ' ') {
+					insertTrie(rootSYM, curKey, curSym); // insert synonym of a word into trie				
+					curSym.clear();
+				}
+				else curSym += synonym[i];
+			}
+			insertTrie(rootSYM, curKey, curSym);
+		}
+	}
+
+	fSynonym.close();
+}
