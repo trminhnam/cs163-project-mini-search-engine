@@ -12,8 +12,13 @@
 #include <stack>
 #include <utility>
 
+#include "DataStructure.h"
+
 using namespace std;
 
+//Load data
+
+void loadData(node *root, node *rootSW, node *rootSYM);
 
 // String processing
 
@@ -27,7 +32,6 @@ vector<int> AndOperator(vector<int>& res, node* keywordNode);
 vector<int> OrOperator(vector<int>& res, node* keywordNode);
 vector<int> getIntersection(vector<int>& a, vector<int>& b);
 vector<int> getUnion(vector<int>& a, vector<int>& b);
-
 
 
 #endif // !_ENGINE_H_
