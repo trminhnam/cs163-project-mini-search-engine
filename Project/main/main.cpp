@@ -2,6 +2,11 @@
 #include "DataStructure.h"
 
 int main() {
+	//Load data into the Trie
+	node *root = new node();
+	node *rootSW = new node();
+	node *rootSYM = new node();
+	loadData(root, rootSW, rootSYM);
 
 	//This main function is for testing input query
 	string s;

@@ -2,8 +2,10 @@
 #define _DATASTRUCTURE_H_
 
 #include <iostream>
+#include <fstream>
 #include <assert.h>
 #include <vector>
+#include <string>
 
 using namespace std;
 
@@ -23,11 +25,15 @@ struct node {
 //Trie functions
 
 int _valChar(char c); // Lonk
-void insertTrie(node*& root, string &s); // Lonk
-void insertTrie(node*& root, string &s, int curArticle); // Lonk
-void insertTrie(node*& root, string &s, int curArticle, int posInTitle); // Lonk
+void insertTrie(node*& root, string &s); // for stopword trie
+void insertTrie(node*& root, string &s, int curArticle); // for word in title of article
+void insertTrie(node*& root, string &s, int curArticle, int posInTitle); // for word in article
+void insertTrie(node*& root, string &s, string& synonym); // for synonym trie
+node* searchTrie(node* root, string &s); 
 void deleteTrie(node* root);
 
+
+//
 
 
 #endif // !_DATASTRUCTURE_H_
