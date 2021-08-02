@@ -6,7 +6,8 @@
 
 
 // Check correct char
-char specialChar[35] = { '+',',',';',' ','\t',
+const int N_speicalChar = 34;
+char specialChar[N_speicalChar] = { '+',',',';','\t',
 						'\0','\f','\v','\n','\r',
 						'!','{', '}','"','(', ')',
 						'<','>','/','[',']','?','`',
@@ -22,7 +23,9 @@ bool isCorrectChar(char& c, string& s) {
 		return true;
 	else if (c == '~' && s == "")
 		return true;
-	for (int i = 0; i < 35; i++) {
+	else if (c == '#' && s == "")
+		return true;
+	for (int i = 0; i < N_speicalChar; i++) {
 		if (c == specialChar[i])
 			return false;
 	}
@@ -33,11 +36,17 @@ bool isCorrectChar(char& c, string& s) {
 
 
 // Query processing
-vector<string> queryProcessing(string& input) {
+
+//Split the query input into vector of words (also operator)
+vector<string> queryInputProcessing(string& input) {
 	stringstream ss(input);
 	string word, temp;
 	vector<string> res;
 	while (ss >> word) {
+		if (word == "AND" || word == "OR"){
+			res.push_back(word);
+			continue;
+		}
 		temp.clear();
 		int i = 0;
 		//Minus operator
@@ -65,6 +74,16 @@ vector<string> queryProcessing(string& input) {
 	return res;
 }
 
+vector<int> querySearching(vector<string>& query) {
+	vector<int> res;
+	vector<int> notinclude;
+	for (int i = 0; i < query.size(); i++) {
+		
+	}
+}
+
+// nam and long
+
 vector<int> AndOperator(vector<int>& res, node* keywordNode) {
 	vector<int> tmp;
 	if (keywordNode == nullptr)
@@ -74,6 +93,7 @@ vector<int> AndOperator(vector<int>& res, node* keywordNode) {
 	for (int i = 0; i < n; i++) {
 		tmp.push_back(keywordNode->position[i].first);
 	}
+
 	res = getIntersection(res, tmp);
 	return res;
 }
@@ -116,7 +136,12 @@ vector<int> getUnion(vector<int>& a, vector<int>& b) {
 }
 
 //-----------------------------------------------------------
-
+bool isSpecialChar(char& c) {
+	for (int i = 0; i < N_speicalChar; i++)
+		if (c == specialChar[i])
+			return true;
+	return false;
+}
 // Load data into trie
 vector<string> _title;
 void loadData(node *root, node *rootSW, node *rootSYM) {
@@ -129,6 +154,8 @@ void loadData(node *root, node *rootSW, node *rootSYM) {
 		_title.push_back(title);
 		string tmp;
 		for (int i = 0; i < title.size(); i++) {
+			if (isSpecialChar(title[i]))
+				continue;
 			if ('a' <= title[i] && title[i] <= 'z' || title[i] == '$' || title[i] == '#') tmp += title[i];
 			else if ('A' <= title[i] && title[i] <= 'Z') tmp += char(title[i] - 'A' + 'a');
 			else if (title[i] == ' '){
