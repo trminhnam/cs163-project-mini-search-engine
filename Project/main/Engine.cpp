@@ -3,7 +3,7 @@
 
 
 //-----------------------------------------------------------
-
+vector<string> _title;
 
 // Check correct char
 const int N_speicalChar = 34;
@@ -111,6 +111,27 @@ vector<int> OrOperator(vector<int>& res, node* keywordNode) {
 	return res;
 }
 
+// intitle: query
+
+vector<int> inTitle(vector<int> &res, node* root, string &s) {
+	node *cur = searchTrie(root, s);
+	res = cur -> title;
+	return res;	
+}
+
+// notinclude query
+
+vector<int> notInclude(vector<int> &cur) {
+	vector<int> res;
+	sort(cur.begin(), cur.end());
+	int pos = 0;
+	for (int i = 0; i < _title.size(); i++) {
+		if (pos < cur.size() && i == cur[pos]) pos++;
+		else res.push_back(i);
+	}
+	return res;
+}
+
 //-------------------------------------------------------------------
 
 // For AND operator
@@ -143,7 +164,6 @@ bool isSpecialChar(char& c) {
 	return false;
 }
 // Load data into trie
-vector<string> _title;
 void loadData(node *root, node *rootSW, node *rootSYM) {
 	// Load text data into trie
 	ifstream fTitle("Search-Engine-Data\\___index.txt");

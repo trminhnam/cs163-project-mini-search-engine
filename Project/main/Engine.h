@@ -32,6 +32,8 @@ vector<int> AndOperator(vector<int>& res, node* keywordNode);
 vector<int> OrOperator(vector<int>& res, node* keywordNode);
 vector<int> getIntersection(vector<int>& a, vector<int>& b);
 vector<int> getUnion(vector<int>& a, vector<int>& b);
+vector<int> inTitle(vector<int> &res, node* root, string &s);
+vector<int> notInclude(vector<int> &cur);
 
 
 #endif // !_ENGINE_H_
