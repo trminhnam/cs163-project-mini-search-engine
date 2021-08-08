@@ -176,12 +176,12 @@ void loadData(node *root, node *rootSW, node *rootSYM) {
 		for (int i = 0; i < title.size(); i++) {
 			if (isSpecialChar(title[i]))
 				continue;
-			if ('a' <= title[i] && title[i] <= 'z' || title[i] == '$' || title[i] == '#') tmp += title[i];
-			else if ('A' <= title[i] && title[i] <= 'Z') tmp += char(title[i] - 'A' + 'a');
+			if ('A' <= title[i] && title[i] <= 'Z') tmp += char(title[i] - 'A' + 'a');
 			else if (title[i] == ' '){
 				insertTrie(root, tmp, _title.size() - 1); // insert title into the trie
 				tmp.clear();
 			}
+			else tmp += title[i];
 		}	
 		insertTrie(root, tmp, _title.size() - 1); // insert title into the trie
 
@@ -191,8 +191,9 @@ void loadData(node *root, node *rootSW, node *rootSYM) {
 		while (fData >> data) {
 			string tmp;
 			for (int i = 0; i < data.size(); i++) {
-				if ('a' <= data[i] && data[i] <= 'z' || data[i] == '$' || data[i] == '#') tmp += data[i];
-				else if ('A' <= data[i] && data[i] <= 'Z') tmp += char(data[i] - 'A' + 'a');
+				if (isSpecialChar(data[i])) continue;
+				if ('A' <= data[i] && data[i] <= 'Z') tmp += char(data[i] - 'A' + 'a');
+				else tmp += data[i];
 			}	
 			insertTrie(root, tmp, _title.size() - 1, cur++); // insert word into trie
 		}
@@ -205,8 +206,9 @@ void loadData(node *root, node *rootSW, node *rootSYM) {
 	while (fStopword >> stopword) {
 		string tmp;
 		for (int i = 0; i < tmp.size(); i++) {
-			if ('a' <= stopword[i] && stopword[i] <= 'z' || stopword[i] == '$' || stopword[i] == '#') tmp += stopword[i];
-			else if ('A' <= stopword[i] && stopword[i] <= 'Z') tmp += char(stopword[i] - 'A' + 'a');
+			if (isSpecialChar(tmp[i])) continue;
+			if ('A' <= stopword[i] && stopword[i] <= 'Z') tmp += char(stopword[i] - 'A' + 'a');
+			else tmp += stopword[i];
 		}	
 		insertTrie(rootSW, tmp); // insert stopword into trie		
 	}
@@ -219,8 +221,8 @@ void loadData(node *root, node *rootSW, node *rootSYM) {
 		if (synonym[0] == 'K') { // Key
 			curKey.clear();
 			for (int i = 5; i < synonym.size(); i++) {
-				if ('a'	<= synonym[i] && synonym[i] <= 'z' || synonym[i] == '$' || synonym[i] == '#') curKey += synonym[i];
-				else if ('A' <= synonym[i] && synonym[i] <= 'Z') curKey += char(synonym[i] - 'A' + 'a');
+				if ('A' <= synonym[i] && synonym[i] <= 'Z') curKey += char(synonym[i] - 'A' + 'a');
+				else curKey += synonym[i];
 			}
 		}
 		else if (synonym[0] == 'S') {
