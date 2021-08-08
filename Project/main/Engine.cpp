@@ -86,10 +86,19 @@ vector<int> querySearching(node *root, node *rootSW, node *rootSYM, vector<strin
 			}
 			break;
 		}
+		else if (query[i] == "filetype:") continue;
 		else if (query[i] == "-") {
+			i++;
 			vector<int> notInc = notInclude(searchTrie(root, query[i + 1]));
 			ans = getIntersection(ans, notInc);
+		}
+		else if (query[i] == "AND") continue;
+		else if (query[i] == "OR") {
 			i++;
+			ans = OrOperator(ans, searchTrie(root, query[i]));
+		}
+		else {
+			ans = AndOperator(ans, searchTrie(root, query[i])); 
 		}
 	}
 	displayTitle(ans);
@@ -268,7 +277,7 @@ void loadData(node *root, node *rootSW, node *rootSYM) {
 		}	
 		insertTrie(root, tmp, _title.size() - 1); // insert title into the trie
 
-		ifstream fData(title);
+		ifstream fData(("Search-Engine-Data\\" + title + ".txt").c_str());
 		string data;
 		int cur = 0;
 		while (fData >> data) {
