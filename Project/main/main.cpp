@@ -20,7 +20,7 @@ int main() {
 
 		for (int i = 0; i < query.size(); i++)
 			cout << "\"" << query[i] << "\"" << endl;
-
+		system("pause");
 		querySearching(root, rootSW, rootSYM, query);
 	}
 	//----------------------------------------------
