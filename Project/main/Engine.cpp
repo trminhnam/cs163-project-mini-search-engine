@@ -38,7 +38,7 @@ bool isCorrectChar(char& c, string& s) {
 // Query processing
 
 //Split the query input into vector of words (also operator)
-vector<string> queryInputProcessing(string& input) {
+vector<string> queryProcessing(string& input) {
 	stringstream ss(input);
 	string word, temp;
 	vector<string> res;
@@ -74,12 +74,81 @@ vector<string> queryInputProcessing(string& input) {
 	return res;
 }
 
-vector<int> querySearching(vector<string>& query) {
-	vector<int> res;
-	vector<int> notinclude;
+vector<int> querySearching(node *root, node *rootSW, node *rootSYM, vector<string>& query) {
+	vector<int> ans;
+	for (int i = 0; i < 11368; i++) ans.push_back(i);
+
 	for (int i = 0; i < query.size(); i++) {
-		
+		if (query[i] == "intitle:") {
+			for (int j = i + 1; j < query.size(); j++) {
+				vector<int> in = inTitle(root, query[j]);
+				ans = getIntersection(ans, in);				
+			}
+			break;
+		}
+		else if (query[i] == "-") {
+			vector<int> notInc = notInclude(searchTrie(root, query[i + 1]));
+			ans = getIntersection(ans, notInc);
+			i++;
+		}
 	}
+	displayTitle(ans);
+	return ans;
+}
+
+// Display Data
+
+void displayTitle(vector<int>& ans) {
+	int pos = 0;
+	while (1) {
+		system("cls");
+		cout << "There are a total of " << ans.size() << " results.\n\n";
+
+		cout << "Showing results from " << pos << " to " << min(pos + 5, (int)ans.size()) << ".\n";
+		for (int i = pos; i < min(pos + 5, (int)ans.size()); i++)
+			cout << i << ". " << _title[ans[i]] << '\n';
+		cout << "What would you like to do?\n";
+		cout << "0: " << "Exit.\n";
+		bool ok = false;
+		if (pos) {
+			cout << "1: " << "Go to previous page.\n";
+			ok = true;
+		}	
+		for (int i = pos; i < min(pos + 5, (int)ans.size()); i++)
+			cout << ok + i - pos + 1 << ": Access post " << _title[ans[i]] << ".\n";
+		if (pos + 5 < (int)ans.size())
+			cout << ok + pos + 5 - pos + 1 << ": Go to next page.\n";
+		cout << "Please input your choice\n";
+  		int r; cin >> r;
+  		if (r == 0) {
+  			system("cls");
+  			getchar();
+  			break;
+  		}	
+  		else if (pos && r == 1) {
+  			system("cls");
+  			pos -= 5;
+  			continue;
+  		}
+  		else if (pos + 5 < (int)ans.size() && r == ok + pos + 5 - pos + 1) {
+  			pos += 5;
+  			continue;
+  		}
+		for (int i = pos; i < min(pos + 5, (int)ans.size()); i++)
+			if (r == ok + i - pos + 1) {
+				ifstream fIn; fIn.open(("Search-Engine-Data\\" + _title[ans[i]] + ".txt").c_str());
+				displayFile(fIn);
+				break;
+			}
+	}
+}
+
+void displayFile(ifstream &fIn) {
+	system("cls");
+	string s;
+	while (getline(fIn, s))
+		cout << s << '\n';
+	system("pause");
 }
 
 // nam and long
@@ -113,16 +182,28 @@ vector<int> OrOperator(vector<int>& res, node* keywordNode) {
 
 // intitle: query
 
-vector<int> inTitle(vector<int> &res, node* root, string &s) {
+vector<int> inTitle(node* root, string &s) {
 	node *cur = searchTrie(root, s);
-	res = cur -> title;
+	vector<int> res = cur -> title;
 	return res;	
 }
 
 // notinclude query
 
-vector<int> notInclude(vector<int> &cur) {
+vector<int> notInclude(node *keywordNode) {
 	vector<int> res;
+
+	if (keywordNode == nullptr) {
+		for (int i = 0; i < _title.size(); i++) res.push_back(i);
+		return res;
+	}
+
+	vector<int> cur;
+	int n = keywordNode->position.size();
+	for (int i = 0; i < n; i++) {
+		cur.push_back(keywordNode->position[i].first);
+	}
+
 	sort(cur.begin(), cur.end());
 	int pos = 0;
 	for (int i = 0; i < _title.size(); i++) {
@@ -171,6 +252,8 @@ void loadData(node *root, node *rootSW, node *rootSYM) {
 
 	string title;
 	while (getline(fTitle, title)) {
+		for (int i = 1; i <= 4; i++)
+			title.pop_back();
 		_title.push_back(title);
 		string tmp;
 		for (int i = 0; i < title.size(); i++) {

@@ -11,11 +11,17 @@ int main() {
 	//This main function is for testing input query
 	string s;
 	vector<string> query;
-	while (getline(cin, s)) {
+
+	while (1) {
+		cout << "Please input what you'd like to search below: \n";
+		getline(cin, s);
+		if (s == "") continue;
 		query = queryProcessing(s);
-		for (int i = 0; i < query.size(); i++) {
+
+		for (int i = 0; i < query.size(); i++)
 			cout << "\"" << query[i] << "\"" << endl;
-		}
+
+		querySearching(root, rootSW, rootSYM, query);
 	}
 	//----------------------------------------------
 
