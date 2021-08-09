@@ -37,16 +37,33 @@ bool isCorrectChar(char& c, string& s) {
 
 // Query processing
 
+//Ham nay ngu lam :'(
+//Chua viet xong
+string correctQueryWord(string& s){
+	//Lower the word
+	transform(s.begin(), s.end(), s.begin(), ::tolower);
+
+
+}
+
 //Split the query input into vector of words (also operator)
 vector<string> queryProcessing(string& input) {
 	stringstream ss(input);
 	string word, temp;
 	vector<string> res;
 	while (ss >> word) {
-		if (word == "AND" || word == "OR"){
+		if (word == "AND" || word == "OR" ){
 			res.push_back(word);
 			continue;
 		}
+		else if(word[0]=='/"' || word[word.size()-1]=='/"'){
+			//Lowercase the after word
+			transform(word.begin(), word.end(), word.begin(), ::tolower);
+			res.push_back(word);
+			continue;
+		}
+		// "a
+		// "a and b" ==>
 		temp.clear();
 		int i = 0;
 		//Minus operator
@@ -76,10 +93,34 @@ vector<string> queryProcessing(string& input) {
 
 vector<int> querySearching(node *root, node *rootSW, node *rootSYM, vector<string>& query) {
 	vector<int> ans;
+	vector<int> notInc;
+	
+	//Initialize res vector
 	for (int i = 0; i < 11368; i++) ans.push_back(i);
+
+	
+	bool completeWord = false; //For query case "a and b"
 
 	for (int i = 0; i < query.size(); i++) {
 		//Intitle query
+		// "a and b"
+		if(query[i][0]=='/"' || completeWord){
+			completeWord = true;
+			//"a
+			if(query[i][0]=='/"')
+				query[i] = query[i].substr(1, query[i].size());
+			//b"
+			else if(query[i][query[i].size()-1]=='/"'){
+				completeWord = false;
+				query[i].pop_back();	//reome final character which is '/"'
+			}
+
+			//Searching for the next words
+			//
+
+
+			continue;
+		}
 		if (query[i] == "intitle:") {
 			for (int j = i + 1; j < query.size(); j++) {
 				vector<int> in = inTitle(root, query[j]);
@@ -92,17 +133,23 @@ vector<int> querySearching(node *root, node *rootSW, node *rootSYM, vector<strin
 		//not include query
 		else if (query[i] == "-") {
 			i++;
-			vector<int> notInc = notInclude(searchTrie(root, query[i + 1]));
+			notInc = notInclude(searchTrie(root, query[i]));
 			ans = getIntersection(ans, notInc);
 		}
-		else if (query[i] == "AND") continue;
+		else if (query[i] == "AND"){ continue; }
 		else if (query[i] == "OR") {
 			i++;
 			ans = OrOperator(ans, searchTrie(root, query[i]));
 		}
+		// Normal query, including and query and money query
+		// $200
+		// handbag $200
 		else {
 			ans = AndOperator(ans, searchTrie(root, query[i])); 
 		}
+		// range money query
+		// 
+
 	}
 	displayTitle(ans);
 	return ans;

@@ -11,6 +11,7 @@
 #include <queue>
 #include <stack>
 #include <utility>
+#include <string.h>
 
 #include "DataStructure.h"
 
