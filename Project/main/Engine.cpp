@@ -79,6 +79,7 @@ vector<int> querySearching(node *root, node *rootSW, node *rootSYM, vector<strin
 	for (int i = 0; i < 11368; i++) ans.push_back(i);
 
 	for (int i = 0; i < query.size(); i++) {
+		//Intitle query
 		if (query[i] == "intitle:") {
 			for (int j = i + 1; j < query.size(); j++) {
 				vector<int> in = inTitle(root, query[j]);
@@ -86,7 +87,9 @@ vector<int> querySearching(node *root, node *rootSW, node *rootSYM, vector<strin
 			}
 			break;
 		}
+		//Filetype query 
 		else if (query[i] == "filetype:") continue;
+		//not include query
 		else if (query[i] == "-") {
 			i++;
 			vector<int> notInc = notInclude(searchTrie(root, query[i + 1]));

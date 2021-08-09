@@ -20,6 +20,14 @@ struct node {
 		for (int i = 0; i < 40; i++) pNext[i] = nullptr;
 		end = false;
 	}
+	~node() {
+		for (int i = 0; i < 40; i++)
+			delete pNext[i];
+		title.clear();
+		position.clear();
+		synonym.clear();
+		pNext.clear();
+	}
 };
 
 //Trie functions
