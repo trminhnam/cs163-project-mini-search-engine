@@ -13,12 +13,13 @@
 #include <utility>
 #include <string.h>
 #include <Windows.h>
+#include <stdio.h>
+#include <conio.h>
 
 #include "DataStructure.h"
-#include "ColorConsole.h"
+#include "ConsoleAndOthers.h"
 
 using namespace std;
-
 
 //Load data
 

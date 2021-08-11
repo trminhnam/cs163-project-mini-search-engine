@@ -1,5 +1,6 @@
 #include "Engine.h"
 #include "DataStructure.h"
+#include "ConsoleAndOthers.h"
 
 
 //-----------------------------------------------------------
@@ -206,6 +207,7 @@ void displayTitle(vector<int>& ans, vector<string> &query) {
 	int pos = 0;
 	while (1) {
 		system("cls");
+		heading();
 		cout << "There are a total of " << ans.size() << " results.\n\n";
 
 		cout << "Showing results from " << pos << " to " << min(pos + 5, (int)ans.size()) << ".\n";
@@ -226,11 +228,13 @@ void displayTitle(vector<int>& ans, vector<string> &query) {
   		int r; cin >> r;
   		if (r == 0) {
   			system("cls");
+			heading();
   			getchar();
   			break;
   		}	
   		else if (pos && r == 1) {
   			system("cls");
+			heading();
   			pos -= 5;
   			continue;
   		}
@@ -249,6 +253,7 @@ void displayTitle(vector<int>& ans, vector<string> &query) {
 
 void displayFile(ifstream &fIn) {
 	system("cls");
+	heading();
 	string s;
 	while (getline(fIn, s))
 		cout << s << '\n';
@@ -258,6 +263,7 @@ void displayFile(ifstream &fIn) {
 
 void displayFile(ifstream& fIn, vector<string>& query) {
 	system("cls");
+	heading();
 	string s, tmp;
 	while (getline(fIn, s)) {
 		stringstream ss(s);
@@ -503,3 +509,11 @@ void loadData(node *root, node *rootSW, node *rootSYM) {
 	}
 	fSynonym.close();
 }
+
+
+
+//===========================================================================
+//Below is history handling
+
+// Moving to ConsoleAndOthers.cpp
+
