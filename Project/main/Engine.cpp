@@ -52,7 +52,7 @@ bool isRangeMoney(string& s) {
 	for (int i = 0; i < n; i++) {
 		if (s[i] == '$')
 			cnt++;
-		else if ((s[i] < '0' || s[i]>'9') && s[i] != '#')
+		else if ((s[i] < '0' || s[i] > '9') && s[i] != '#')
 			return false;
 	}
 	return cnt == 2;
@@ -120,9 +120,9 @@ vector<int> querySearching(node *root, node *rootSW, node *rootSYM, vector<strin
 			completeWord = true;
 			//"a
 			if(query[i][0]=='\"') // remove first character which is '\"'
-				query[i] = query[i].substr(1, query[i].size());
+				query[i] = query[i].substr(1, query[i].size() - 1);
 			//b"
-			else if(query[i][query[i].size()-1]=='\"'){
+			if(query[i][query[i].size()-1]=='\"'){
 				completeWord = false;
 				query[i].pop_back(); //remove final character which is '\"'
 			}
@@ -196,13 +196,13 @@ vector<int> querySearching(node *root, node *rootSW, node *rootSYM, vector<strin
 		// 
 
 	}
-	displayTitle(ans);
+	displayTitle(ans, query);
 	return ans;
 }
 
 // Display Data
 
-void displayTitle(vector<int>& ans) {
+void displayTitle(vector<int>& ans, vector<string> &query) {
 	int pos = 0;
 	while (1) {
 		system("cls");
@@ -241,7 +241,7 @@ void displayTitle(vector<int>& ans) {
 		for (int i = pos; i < min(pos + 5, (int)ans.size()); i++)
 			if (r == ok + i - pos + 1) {
 				ifstream fIn; fIn.open(("Search-Engine-Data\\" + _title[ans[i]] + ".txt").c_str());
-				displayFile(fIn);
+				displayFile(fIn, query);
 				break;
 			}
 	}
@@ -252,6 +252,7 @@ void displayFile(ifstream &fIn) {
 	string s;
 	while (getline(fIn, s))
 		cout << s << '\n';
+	fIn.close();
 	system("pause");
 }
 
@@ -261,13 +262,21 @@ void displayFile(ifstream& fIn, vector<string>& query) {
 	while (getline(fIn, s)) {
 		stringstream ss(s);
 		while (ss >> tmp) {
-			if (find(query.begin(), query.end(), tmp) != query.end())
+			string __tmp;
+			for (int i = 0; i < tmp.size(); i++) {
+				if (isSpecialChar(tmp[i])) continue;
+				if ('A' <= tmp[i] && tmp[i] <= 'Z') __tmp += char(tmp[i] - 'A' + 'a');
+				else __tmp += tmp[i];
+			}
+			if (find(query.begin(), query.end(), __tmp) != query.end())
 				cout << Color(11) << tmp << Color(7) << " ";
 			else
 				cout << tmp << " ";
 		}
 		cout << endl;
 	}
+	fIn.close();
+	system("pause");
 }
 
 // nam and long
@@ -275,7 +284,7 @@ void displayFile(ifstream& fIn, vector<string>& query) {
 vector<int> AndOperator(vector<int>& res, node* keywordNode) {
 	vector<int> tmp;
 	if (keywordNode == nullptr)
-		return res;
+		return {};
 
 	int n = keywordNode->position.size();
 	for (int i = 0; i < n; i++) {
@@ -303,6 +312,8 @@ vector<int> OrOperator(vector<int>& res, node* keywordNode) {
 
 vector<int> inTitle(node* root, string &s) {
 	node *cur = searchTrie(root, s);
+	if (cur == nullptr)
+		return {};
 	vector<int> res = cur -> title;
 	return res;	
 }
@@ -353,25 +364,30 @@ vector<int> findExact(node *root, vector<string> &exactMatch) {
 	for (int i = 0; i < cur.size(); i++) {
 		ifstream fIn(("Search-Engine-Data\\" + _title[cur[i]] + ".txt").c_str());
 		string s;
-		bool ok = false;
-		while (getline(fIn, s)) {
-			istringstream iss(s);
-			vector<string> curLine; string tmp;
-			while (iss >> tmp) curLine.push_back(tmp);
-			for (int id1 = 0; id1 + (int)exactMatch.size() - 1 < (int)curLine.size(); id1++) {
-				bool cur_ok = false;
-				for (int id2 = 0; id2 < (int)exactMatch.size(); id2++) {
-					if (curLine[id1 + id2] != exactMatch[id2])
-						cur_ok = false;
-				}
-				if (cur_ok) {
-					ok = true;
-					break;
-				}
+		vector<string> curLine;
+		while (fIn >> s) {
+			string tmp;
+			for (int i = 0; i < s.size(); i++) {
+				if (isSpecialChar(s[i])) continue;
+				if ('A' <= s[i] && s[i] <= 'Z') tmp += char(s[i] - 'A' + 'a');
+				else tmp += s[i];
 			}
-			if (ok) break;								
+			curLine.push_back(tmp);
 		}
-		if (ok) ans.push_back(i);
+		bool ok = false;
+		for (int id1 = 0; id1 + (int)exactMatch.size() - 1 < (int)curLine.size(); id1++) {
+			bool cur_ok = true;
+			for (int id2 = 0; id2 < (int)exactMatch.size(); id2++) {
+				if (curLine[id1 + id2] != exactMatch[id2])
+					cur_ok = false;
+			}
+			if (cur_ok) {
+				ok = true;
+				break;
+			}
+		}
+		if (ok) ans.push_back(cur[i]);
+		fIn.close();
 	}
 	return ans;
 }
@@ -485,6 +501,5 @@ void loadData(node *root, node *rootSW, node *rootSYM) {
 			insertTrie(rootSYM, curKey, curSym);
 		}
 	}
-
 	fSynonym.close();
 }
