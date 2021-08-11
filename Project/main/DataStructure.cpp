@@ -88,7 +88,7 @@ void insertTrie(node*& root, string &s, string &synonym) {
 node* searchTrie(node* root, string &s) {
 	node *cur = root;	
 	for (int i = 0; i < s.size(); i++) {
-		char c=  s[i]; int nxt = _valChar(c);
+		char c = s[i]; int nxt = _valChar(c);
 		if (!cur -> pNext[nxt]) return nullptr;
 		cur = cur -> pNext[nxt];
 

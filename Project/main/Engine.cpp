@@ -56,7 +56,7 @@ vector<string> queryProcessing(string& input) {
 			res.push_back(word);
 			continue;
 		}
-		else if(word[0]=='/"' || word[word.size()-1]=='/"'){
+		else if(word[0]=='\"' || word[word.size()-1]=='\"'){
 			//Lowercase the after word
 			transform(word.begin(), word.end(), word.begin(), ::tolower);
 			res.push_back(word);
@@ -94,6 +94,7 @@ vector<string> queryProcessing(string& input) {
 vector<int> querySearching(node *root, node *rootSW, node *rootSYM, vector<string>& query) {
 	vector<int> ans;
 	vector<int> notInc;
+	vector<string> exactMatch;
 	
 	//Initialize res vector
 	for (int i = 0; i < 11368; i++) ans.push_back(i);
@@ -102,25 +103,30 @@ vector<int> querySearching(node *root, node *rootSW, node *rootSYM, vector<strin
 	bool completeWord = false; //For query case "a and b"
 
 	for (int i = 0; i < query.size(); i++) {
-		//Intitle query
 		// "a and b"
-		if(query[i][0]=='/"' || completeWord){
+		if(query[i][0]=='\"' || completeWord){
 			completeWord = true;
 			//"a
-			if(query[i][0]=='/"')
+			if(query[i][0]=='\"') // remove first character which is '\"'
 				query[i] = query[i].substr(1, query[i].size());
 			//b"
-			else if(query[i][query[i].size()-1]=='/"'){
+			else if(query[i][query[i].size()-1]=='\"'){
 				completeWord = false;
-				query[i].pop_back();	//reome final character which is '/"'
+				query[i].pop_back(); //remove final character which is '\"'
 			}
 
 			//Searching for the next words
-			//
 
+			exactMatch.push_back(query[i]);
+			if (!completeWord) {
+				vector<int> curQuery = findExact(root, exactMatch);
+				ans = getIntersection(ans, curQuery);
+				exactMatch.clear();
+			}
 
 			continue;
 		}
+		//Intitle query
 		if (query[i] == "intitle:") {
 			for (int j = i + 1; j < query.size(); j++) {
 				vector<int> in = inTitle(root, query[j]);
@@ -136,7 +142,7 @@ vector<int> querySearching(node *root, node *rootSW, node *rootSYM, vector<strin
 			notInc = notInclude(searchTrie(root, query[i]));
 			ans = getIntersection(ans, notInc);
 		}
-		else if (query[i] == "AND"){ continue; }
+		else if (query[i] == "AND") continue;
 		else if (query[i] == "OR") {
 			i++;
 			ans = OrOperator(ans, searchTrie(root, query[i]));
@@ -144,10 +150,29 @@ vector<int> querySearching(node *root, node *rootSW, node *rootSYM, vector<strin
 		// Normal query, including and query and money query
 		// $200
 		// handbag $200
+		// range money query: $50$200
+		else if (isRangeMoney(query[i])) {
+			string s1, s2;
+			for (int i1 = 1; ; i1++) {
+				if (query[i][i1] == '$') {
+					for (int i2 = i1 + 1; i2 < query[i].size(); i2++)
+						s2 += query[i][i2];
+					break;
+				}
+				else s1 += query[i][i1];
+			}	
+
+			int n1 = stoi(s1), n2 = stoi(s2);
+			vector<int> curQuery;
+			for (int num = n1; num < n2; num++) {
+				string q = '$' + to_string(num);
+				curQuery = OrOperator(curQuery, searchTrie(root, q));
+			}
+			ans = getIntersection(ans, curQuery);
+		}
 		else {
 			ans = AndOperator(ans, searchTrie(root, query[i])); 
 		}
-		// range money query
 		// 
 
 	}
@@ -270,6 +295,44 @@ vector<int> notInclude(node *keywordNode) {
 		else res.push_back(i);
 	}
 	return res;
+}
+
+// Find the list of title which have the exactMatch as a consecutive string
+
+vector<int> findExact(node *root, vector<string> &exactMatch) {
+	vector<int> cur;
+	for (int i = 0; i < _title.size(); i++)
+		cur.push_back(i);
+	for (int i = 0; i < exactMatch.size(); i++) {
+		string s = exactMatch[i];
+		cur = AndOperator(cur, searchTrie(root, s));
+	}	
+	
+	vector<int> ans;
+	for (int i = 0; i < cur.size(); i++) {
+		ifstream fIn(("Search-Engine-Data\\" + _title[cur[i]] + ".txt").c_str());
+		string s;
+		bool ok = false;
+		while (getline(fIn, s)) {
+			istringstream iss(s);
+			vector<string> curLine; string tmp;
+			while (iss >> tmp) curLine.push_back(tmp);
+			for (int id1 = 0; id1 + (int)exactMatch.size() - 1 < (int)curLine.size(); id1++) {
+				bool cur_ok = false;
+				for (int id2 = 0; id2 < (int)exactMatch.size(); id2++) {
+					if (curLine[id1 + id2] != exactMatch[id2])
+						cur_ok = false;
+				}
+				if (cur_ok) {
+					ok = true;
+					break;
+				}
+			}
+			if (ok) break;								
+		}
+		if (ok) ans.push_back(i);
+	}
+	return ans;
 }
 
 //-------------------------------------------------------------------
