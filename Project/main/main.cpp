@@ -6,10 +6,15 @@ int main() {
 	system("mode 650");
 
 	//Load data into the Trie
+	cerr << "LOADING DATA...\n";
+	cerr << "Have yourself a sip of coffee while waiting.\n";
 	node *root = new node();
 	node *rootSW = new node();
 	node *rootSYM = new node();
 	loadData(root, rootSW, rootSYM);
+	cerr << "LOADING DONE!!\n";
+	system("pause");
+	system("cls");
 
 	//This main function is for testing input query
 	string s;
