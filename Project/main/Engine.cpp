@@ -43,7 +43,19 @@ string correctQueryWord(string& s){
 	//Lower the word
 	transform(s.begin(), s.end(), s.begin(), ::tolower);
 
+	return "";
+}
 
+// Check range money query
+bool isRangeMoney(string& s) {
+	int cnt = 0, n = s.length();
+	for (int i = 0; i < n; i++) {
+		if (s[i] == '$')
+			cnt++;
+		else if ((s[i] < '0' || s[i]>'9') && s[i] != '#')
+			return false;
+	}
+	return cnt == 2;
 }
 
 //Split the query input into vector of words (also operator)
@@ -208,6 +220,21 @@ void displayFile(ifstream &fIn) {
 	while (getline(fIn, s))
 		cout << s << '\n';
 	system("pause");
+}
+
+void displayFile(ifstream& fIn, vector<string>& query) {
+	system("cls");
+	string s, tmp;
+	while (getline(fIn, s)) {
+		stringstream ss(s);
+		while (ss >> tmp) {
+			if (find(query.begin(), query.end(), tmp) != query.end())
+				cout << Color(11) << tmp << Color(7) << " ";
+			else
+				cout << tmp << " ";
+		}
+		cout << endl;
+	}
 }
 
 // nam and long
