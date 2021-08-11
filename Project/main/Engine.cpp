@@ -146,6 +146,14 @@ vector<int> querySearching(node *root, node *rootSW, node *rootSYM, vector<strin
 		else if (query[i] == "OR") {
 			i++;
 			ans = OrOperator(ans, searchTrie(root, query[i]));
+		}                 
+		else if (query[i] == "~") { // Synonym
+			i++;
+			vector<string> sym = findSynonym(rootSYM, query[i]);
+			for (int j = 0; j < sym.size(); j++) {
+				query.push_back("OR");
+				query.push_back(sym[j]);
+			}			
 		}
 		// Normal query, including and query and money query
 		// $200
@@ -294,6 +302,12 @@ vector<int> notInclude(node *keywordNode) {
 		if (pos < cur.size() && i == cur[pos]) pos++;
 		else res.push_back(i);
 	}
+	return res;
+}
+
+vector<string> findSynonym(node *rootSYM, string &s) {
+	node *cur = searchTrie(rootSYM, s);
+	vector<string> res = cur -> synonym;
 	return res;
 }
 

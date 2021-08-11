@@ -40,6 +40,7 @@ vector<int> getIntersection(vector<int>& a, vector<int>& b);
 vector<int> getUnion(vector<int>& a, vector<int>& b);
 vector<int> inTitle(node* root, string &s);
 vector<int> notInclude(node* keywordNode);
+vector<string> findSynonym(node *rootSYM, string &s);
 vector<int> findExact(node* root, vector<string> &exactMatch);
 
 #endif // !_ENGINE_H_
