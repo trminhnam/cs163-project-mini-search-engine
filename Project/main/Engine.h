@@ -12,8 +12,10 @@
 #include <stack>
 #include <utility>
 #include <string.h>
+#include <Windows.h>
 
 #include "DataStructure.h"
+#include "ColorConsole.h"
 
 using namespace std;
 
