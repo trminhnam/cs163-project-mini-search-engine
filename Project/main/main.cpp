@@ -2,6 +2,9 @@
 #include "DataStructure.h"
 
 int main() {
+	//Set console full screen
+	system("mode 650");
+
 	//Load data into the Trie
 	node *root = new node();
 	node *rootSW = new node();
@@ -23,7 +26,7 @@ int main() {
 
 		//Debug for inputting query, will be deleted before submitting
 		for (int i = 0; i < query.size(); i++)
-			cout << "\"" << query[i] << "\"" << endl;
+			cout << "\"" << Color(11) << query[i] << Color(7) << "\"" << endl;
 		system("pause");
 
 		querySearching(root, rootSW, rootSYM, query);
