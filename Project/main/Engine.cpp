@@ -116,6 +116,9 @@ vector<int> querySearching(node *root, node *rootSW, node *rootSYM, vector<strin
 	bool completeWord = false; //For query case "a and b"
 
 	for (int i = 0; i < query.size(); i++) {
+		// Wildcard char, nothing would change
+		if (query[i] == "*") continue;
+
 		// "a and b"
 		if(query[i][0]=='\"' || completeWord){
 			completeWord = true;
@@ -213,6 +216,7 @@ void displayTitle(vector<int>& ans, vector<string> &query) {
 		cout << "Showing results from " << pos << " to " << min(pos + 5, (int)ans.size()) << ".\n";
 		for (int i = pos; i < min(pos + 5, (int)ans.size()); i++)
 			cout << i << ". " << _title[ans[i]] << '\n';
+		cout << '\n';	
 		cout << "What would you like to do?\n";
 		cout << "0: " << "Exit.\n";
 		bool ok = false;
@@ -224,7 +228,8 @@ void displayTitle(vector<int>& ans, vector<string> &query) {
 			cout << ok + i - pos + 1 << ": Access post " << _title[ans[i]] << ".\n";
 		if (pos + 5 < (int)ans.size())
 			cout << ok + pos + 5 - pos + 1 << ": Go to next page.\n";
-		cout << "Please input your choice\n";
+		cout << '\n';
+		cout << "Please input your choice:\n";
   		int r; cin >> r;
   		if (r == 0) {
   			system("cls");
@@ -341,6 +346,7 @@ vector<int> notInclude(node *keywordNode) {
 	}
 
 	sort(cur.begin(), cur.end());
+	cur.resize(unique(cur.begin(), cur.end()) - cur.begin());
 	int pos = 0;
 	for (int i = 0; i < _title.size(); i++) {
 		if (pos < cur.size() && i == cur[pos]) pos++;
@@ -356,7 +362,7 @@ vector<string> findSynonym(node *rootSYM, string &s) {
 }
 
 // Find the list of title which have the exactMatch as a consecutive string
-
+                  
 vector<int> findExact(node *root, vector<string> &exactMatch) {
 	vector<int> cur;
 	for (int i = 0; i < _title.size(); i++)
