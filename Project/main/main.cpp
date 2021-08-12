@@ -2,6 +2,7 @@
 #include "DataStructure.h"
 #include "ConsoleAndOthers.h"
 
+
 int main() {
 	//Set console full screen
 	system("mode 650");
@@ -25,17 +26,20 @@ int main() {
 	//This main function is for testing input query
 	string s;
 	vector<string> query;
-
 	
+	//Create a console for history, query input and also title
+	HANDLE hStdout;
+	hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
+
 
 	while (1) {
 		system("cls");
-		heading();
+		heading(hStdout);
 		cout << "Please input what you'd like to search below: \n";
 		cout << "If you want to exit, type \"exit()\".\n";
 		//getline(cin, s);
 		
-		s = queryInput();
+		s = queryInput(hStdout);
 
 		if (s == "") continue;
 		else if (s == "exit()") break;
@@ -51,7 +55,7 @@ int main() {
 
 		system("pause");
 
-		querySearching(root, rootSW, rootSYM, query);
+		querySearching(root, rootSW, rootSYM, query, hStdout);
 	}
 	//----------------------------------------------
 	delete root;
