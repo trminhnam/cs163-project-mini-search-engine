@@ -43,7 +43,7 @@ int main() {
 
 		system("pause");
 
-		//querySearching(root, rootSW, rootSYM, query);
+		querySearching(root, rootSW, rootSYM, query);
 	}
 	//----------------------------------------------
 	delete root;
