@@ -1,8 +1,13 @@
-#ifndef _COLORCONSOLE_H_
-#define _COLORCONSOLE_H_
+#ifndef _CONSOLEANDOTHERS_H_
+#define _CONSOLEANDOTHERS_H_
 
 #include <iostream>
 #include <Windows.h>
+#include <conio.h>
+#include <stdio.h>
+#include <fstream>
+#include <string>
+using namespace std;
 
 #define RESET   "\033[0m"
 #define BLACK   "\033[30m"      /* Black */
@@ -38,4 +43,11 @@ private:
     HANDLE consoleHandle;
 };
 
-#endif // !_COLORCONSOLE_H_
+//Print history and get input query
+string queryInput();
+void clearHistoryConsole(HANDLE& h, COORD& start);
+COORD GetConsoleCursorPosition(HANDLE hConsoleOutput);
+void historyProcessing(string& rawQuery);
+
+
+#endif // !_CONSOLEANDOTHERS_H_
