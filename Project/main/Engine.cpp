@@ -104,11 +104,13 @@ vector<string> queryProcessing(string& input) {
 	return res;
 }
 
-vector<int> querySearching(node *root, node *rootSW, node *rootSYM, vector<string>& query) {
+vector<int> querySearching(node *root, node *rootSW, node *rootSYM, vector<string>& query, HANDLE& hStdout) {
 	vector<int> ans;
 	vector<int> notInc;
 	vector<string> exactMatch;
 	
+	vector<string> wordToHighlight;	//use this vector for output
+
 	//Initialize res vector
 	for (int i = 0; i < 11368; i++) ans.push_back(i);
 
@@ -134,6 +136,8 @@ vector<int> querySearching(node *root, node *rootSW, node *rootSYM, vector<strin
 			//Searching for the next words
 
 			exactMatch.push_back(query[i]);
+			wordToHighlight.push_back(query[i]);
+
 			if (!completeWord) {
 				vector<int> curQuery = findExact(root, exactMatch);
 				ans = getIntersection(ans, curQuery);
@@ -162,6 +166,9 @@ vector<int> querySearching(node *root, node *rootSW, node *rootSYM, vector<strin
 		else if (query[i] == "OR") {
 			i++;
 			ans = OrOperator(ans, searchTrie(root, query[i]));
+
+			//To hightlight the output
+			wordToHighlight.push_back(query[i]);
 		}                 
 		else if (query[i] == "~") { // Synonym
 			i++;
@@ -169,11 +176,12 @@ vector<int> querySearching(node *root, node *rootSW, node *rootSYM, vector<strin
 			for (int j = 0; j < sym.size(); j++) {
 				query.push_back("OR");
 				query.push_back(sym[j]);
-			}			
+
+				wordToHighlight.push_back(sym[j]);
+			}
+			wordToHighlight.push_back(query[i]);
+			
 		}
-		// Normal query, including and query and money query
-		// $200
-		// handbag $200
 		// range money query: $50$200
 		else if (isRangeMoney(query[i])) {
 			string s1, s2;
@@ -188,29 +196,41 @@ vector<int> querySearching(node *root, node *rootSW, node *rootSYM, vector<strin
 
 			int n1 = stoi(s1), n2 = stoi(s2);
 			vector<int> curQuery;
+			int prevSz = curQuery.size(), newSz;
 			for (int num = n1; num < n2; num++) {
 				string q = '$' + to_string(num);
+				prevSz = curQuery.size();
 				curQuery = OrOperator(curQuery, searchTrie(root, q));
+				newSz = curQuery.size();
+				if (newSz > prevSz) wordToHighlight.push_back(q);
 			}
 			ans = getIntersection(ans, curQuery);
 		}
+		// Normal query, including and query and money query
+		// $200
+		// handbag $200
 		else {
 			ans = AndOperator(ans, searchTrie(root, query[i])); 
+			wordToHighlight.push_back(query[i]);
 		}
 		// 
 
 	}
-	displayTitle(ans, query);
+
+	displayTitle(ans, wordToHighlight, hStdout);
+
 	return ans;
 }
 
 // Display Data
 
-void displayTitle(vector<int>& ans, vector<string> &query) {
+
+void displayTitle(vector<int>& ans, vector<string>& wordToHighlight, HANDLE& hStdout) {
+  
 	int pos = 0;
 	while (1) {
 		system("cls");
-		heading();
+		heading(hStdout);
 		cout << "There are a total of " << ans.size() << " results.\n\n";
 
 		cout << "Showing results from " << pos << " to " << min(pos + 5, (int)ans.size()) << ".\n";
@@ -233,13 +253,13 @@ void displayTitle(vector<int>& ans, vector<string> &query) {
   		int r; cin >> r;
   		if (r == 0) {
   			system("cls");
-			heading();
+			heading(hStdout);
   			getchar();
   			break;
   		}	
   		else if (pos && r == 1) {
   			system("cls");
-			heading();
+			heading(hStdout);
   			pos -= 5;
   			continue;
   		}
@@ -250,15 +270,17 @@ void displayTitle(vector<int>& ans, vector<string> &query) {
 		for (int i = pos; i < min(pos + 5, (int)ans.size()); i++)
 			if (r == ok + i - pos + 1) {
 				ifstream fIn; fIn.open(("Search-Engine-Data\\" + _title[ans[i]] + ".txt").c_str());
-				displayFile(fIn, query);
+
+				displayFile(fIn, wordToHighlight, hStdout);
+
 				break;
 			}
 	}
 }
 
-void displayFile(ifstream &fIn) {
+void displayFile(ifstream &fIn, HANDLE& hStdout) {
 	system("cls");
-	heading();
+	heading(hStdout);
 	string s;
 	while (getline(fIn, s))
 		cout << s << '\n';
@@ -266,9 +288,13 @@ void displayFile(ifstream &fIn) {
 	system("pause");
 }
 
-void displayFile(ifstream& fIn, vector<string>& query) {
+void displayFile(ifstream& fIn, vector<string>& wordToHighlight, HANDLE& hStdout) {
+	for (int i = 0; i < wordToHighlight.size(); i++)
+		cout << wordToHighlight[i] << endl;
+	cout << endl;
 	system("cls");
-	heading();
+	heading(hStdout);
+	
 	string s, tmp;
 	while (getline(fIn, s)) {
 		stringstream ss(s);
