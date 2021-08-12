@@ -21,8 +21,11 @@ int main() {
 	string s;
 	vector<string> query;
 
+	
+
 	while (1) {
 		system("cls");
+		heading();
 		cout << "Please input what you'd like to search below: \n";
 		cout << "If you want to exit, type \"exit()\".\n";
 		//getline(cin, s);
