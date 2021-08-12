@@ -305,7 +305,7 @@ void displayFile(ifstream& fIn, vector<string>& wordToHighlight, HANDLE& hStdout
 				if ('A' <= tmp[i] && tmp[i] <= 'Z') __tmp += char(tmp[i] - 'A' + 'a');
 				else __tmp += tmp[i];
 			}
-			if (find(query.begin(), query.end(), __tmp) != query.end())
+			if (find(wordToHighlight.begin(), wordToHighlight.end(), __tmp) != wordToHighlight.end())
 				cout << Color(11) << tmp << Color(7) << " ";
 			else
 				cout << tmp << " ";

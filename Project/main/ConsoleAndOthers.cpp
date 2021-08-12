@@ -66,7 +66,7 @@ string queryInput(HANDLE& hStdout) {
 	SetConsoleCursorPosition(hStdout, inputCoord);
 	
 	//Add new raw query to history.txt for later searching
-	if (query != "exit()" && query!=" " && query!="") {
+	if (query != "exit()" && query!=" " && query!="" && query!="help()" && query!="clearHistory()" && query!="viewHistory()") {
 		ofstream fout("history.txt", ios::app);
 		if (fout.is_open()) {
 			fout << query << endl;
@@ -135,3 +135,61 @@ void historyProcessing(HANDLE& hStdout, string& rawQuery) {
 	fin.close();
 }
 
+
+//Further function
+void displayHelp(HANDLE& h) {
+	heading(h);
+
+	ifstream fin("help.txt");
+	if (!fin.is_open()) {
+		cout << "Cannot load help data file.\n";
+		system("pause");
+		return;
+	}
+	cout << "Command:\n";
+	int i = 1;
+	string line;
+	while (getline(fin, line)) {
+		cout << i << ". " << line << endl;
+	}
+	fin.close();
+	system("pause");
+}
+
+void printHistory(HANDLE& h) {
+	heading(h);
+
+	ifstream fin("history.txt");
+	if (!fin.is_open()) {
+		cout << "Cannot load history data file.\n";
+		system("pause");
+		return;
+	}
+	cout << "History:\n";
+	int i = 1;
+	string line;
+	while (getline(fin, line)) {
+		if(line=="") {
+			cout << endl;
+			continue;
+		}
+		cout << i++ << ". " << line << endl;
+	}
+	fin.close();
+	system("pause");
+}
+
+void clearHistory(HANDLE& h) {
+	heading(h);
+
+	std::ofstream fout("history.txt");
+	if (!fout.is_open()) {
+		cout << "Cannot open history.txt to delete.\n";
+		system("pause");
+		return;
+	}
+	fout.open("history.txt", ios::out | ios::trunc);
+	fout.close();
+	cout << "Delete history successfully.\n";
+	system("pause");
+}
