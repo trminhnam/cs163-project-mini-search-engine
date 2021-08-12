@@ -139,14 +139,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ConsoleAndOthers.cpp" />
     <ClCompile Include="DataStructure.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ColorConsole.h" />
+    <ClInclude Include="ConsoleAndOthers.h" />
     <ClInclude Include="DataStructure.h" />
     <ClInclude Include="Engine.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="history.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
