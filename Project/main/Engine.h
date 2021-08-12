@@ -31,11 +31,11 @@ bool isCorrectChar(char& c, string& s);
 
 // Query processing
 vector<string> queryProcessing(string& input);
-vector<int> querySearching(node *root, node *rootSW, node *rootSYM, vector<string>& query);
+vector<int> querySearching(node *root, node *rootSW, node *rootSYM, vector<string>& query, HANDLE& hStdout);
 
 // Display
-void displayTitle(vector<int>& ans);
-void displayFile(ifstream& fIn);
+void displayTitle(vector<int>& ans, vector<string>& wordToHighlight, HANDLE& hStdout);
+void displayFile(ifstream& fIn, vector<string>& wordToHighlight, HANDLE& hStdout);
 
 vector<int> AndOperator(vector<int>& res, node* keywordNode);
 vector<int> OrOperator(vector<int>& res, node* keywordNode);
