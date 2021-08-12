@@ -1,5 +1,6 @@
 #include "Engine.h"
 #include "DataStructure.h"
+#include "ConsoleAndOthers.h"
 
 
 //-----------------------------------------------------------
@@ -488,3 +489,14 @@ void loadData(node *root, node *rootSW, node *rootSYM) {
 
 	fSynonym.close();
 }
+
+
+
+
+
+
+//===========================================================================
+//Below is history handling
+
+// Moving to ConsoleAndOthers.cpp
+
