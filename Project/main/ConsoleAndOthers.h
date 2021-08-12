@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <fstream>
 #include <string>
+#include <time.h>
 using namespace std;
 
 #define RESET   "\033[0m"
@@ -48,6 +49,12 @@ string queryInput(HANDLE& hStdout);
 void clearHistoryConsole(HANDLE& h, COORD start);
 COORD GetConsoleCursorPosition(HANDLE& hConsoleOutput);
 void historyProcessing(HANDLE& hStdout, string& rawQuery);
+
+//Further funcion
+void displayHelp(HANDLE& h);
+void printHistory(HANDLE& h);
+void clearHistory(HANDLE& h);
+
 
 
 //Heading
