@@ -23,6 +23,7 @@ using namespace std;
 
 //Load data
 
+bool isSpecialChar(char& c);
 void loadData(node *root, node *rootSW, node *rootSYM);
 
 // String processing
@@ -34,9 +35,14 @@ vector<string> queryProcessing(string& input);
 vector<int> querySearching(node *root, node *rootSW, node *rootSYM, vector<string>& query, HANDLE& hStdout);
 
 // Display
+
 void displayTitle(vector<int>& ans, vector<string>& wordToHighlight, HANDLE& hStdout);
 void displayFile(ifstream& fIn, vector<string>& wordToHighlight, HANDLE& hStdout);
 
+
+// Query searching
+
+bool isRangeMoney(string& s);
 vector<int> AndOperator(vector<int>& res, node* keywordNode);
 vector<int> OrOperator(vector<int>& res, node* keywordNode);
 vector<int> getIntersection(vector<int>& a, vector<int>& b);
