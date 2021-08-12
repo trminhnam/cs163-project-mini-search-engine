@@ -50,4 +50,8 @@ COORD GetConsoleCursorPosition(HANDLE hConsoleOutput);
 void historyProcessing(string& rawQuery);
 
 
+//Heading
+void heading();
+
+
 #endif // !_CONSOLEANDOTHERS_H_
