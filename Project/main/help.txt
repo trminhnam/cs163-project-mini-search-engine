@@ -1,13 +1,17 @@
-exit():             Exit our program
-help():             Display command and query that our program supports
-viewHistory():      See all the history you have searched
-clearHistory():     Clear all the previous history
+I. Command:
+exit():              Exit our program
+help():              Display command and query that our program supports
+viewHistory():       See all the history you have searched
+clearHistory():      Clear all the previous history
 
-"AND" query:        keyword1 AND keyword2
-"OR" query:         keyword1 OR keyword2
-"-" query:          not include query, -keyword
-"intitle:" query:   intitle:keyword
-"filetype:" query:  filetype:keyword
-"$money" query:     $500
-"$money1..$money2": $50..$200
-"~keyword":         find synonyms of keywords
+
+II. Query:
+"AND" query:         keyword1 AND keyword2
+"OR" query:          keyword1 OR keyword2
+"-" query:           not include query, -keyword
+"intitle:" query:    intitle:keyword
+"filetype:" query:   filetype:keyword
+"$money" query:      $500
+"$money1..$money2":  $50..$200
+"~keyword":          find synonyms of keywords
+
