@@ -48,7 +48,7 @@ private:
 string queryInput(HANDLE& hStdout);
 void clearHistoryConsole(HANDLE& h, COORD start);
 COORD GetConsoleCursorPosition(HANDLE& hConsoleOutput);
-void historyProcessing(HANDLE& hStdout, string& rawQuery);
+void historyProcessing(HANDLE& hStdout, string& rawQuery, bool& isInHistory);
 
 //Further funcion
 void displayHelp(HANDLE& h);
