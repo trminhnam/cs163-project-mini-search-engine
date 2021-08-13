@@ -150,6 +150,7 @@
     <ClInclude Include="Engine.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="help.txt" />
     <Text Include="history.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
