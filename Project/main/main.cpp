@@ -25,7 +25,6 @@ int main() {
 	cout << "Loading data time: " << (double)(endTime - startTime) / CLOCKS_PER_SEC << " seconds.\n";
 
 	system("pause");
-	system("cls");
 
 	//This main function is for testing input query
 	string s;
@@ -37,7 +36,6 @@ int main() {
 
 
 	while (1) {
-		system("cls");
 		heading(hStdout);
 		cout << "Please input what you'd like to search below: \n";
 		cout << "If you use this program the first time, type \"help()\".\n";
