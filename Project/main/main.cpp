@@ -19,7 +19,7 @@ int main() {
 	node *root = new node();
 	node *rootSW = new node();
 	node *rootSYM = new node();
-	//loadData(root, rootSW, rootSYM);
+	loadData(root, rootSW, rootSYM);
 	cerr << "LOADING DONE!!\n";
 	clock_t endTime = clock();
 	cout << "Loading data time: " << (double)(endTime - startTime) / CLOCKS_PER_SEC << " seconds.\n";
