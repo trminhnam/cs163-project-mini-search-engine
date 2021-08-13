@@ -80,7 +80,6 @@ void insertTrie(node*& root, string &s, string &synonym) {
 		char c = s[i]; int nxt = _valChar(c);
 		if (!cur -> pNext[nxt]) cur -> pNext[nxt] = new node();
 		cur = cur -> pNext[nxt];
-
 		if (i == s.size() - 1) cur -> synonym.push_back(synonym);		
 	}
 }
@@ -91,7 +90,6 @@ node* searchTrie(node* root, string &s) {
 		char c = s[i]; int nxt = _valChar(c);
 		if (!cur -> pNext[nxt]) return nullptr;
 		cur = cur -> pNext[nxt];
-
 		if (i == s.size() - 1) return cur;
 	}
 }

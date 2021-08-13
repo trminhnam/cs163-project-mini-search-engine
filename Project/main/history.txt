@@ -25,3 +25,8 @@ largest * the word
 *
 ~set
 panda
+cat
+dog
+Manchester -United
+~Abnormal
+~die

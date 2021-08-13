@@ -174,7 +174,8 @@ vector<int> querySearching(node *root, node *rootSW, node *rootSYM, vector<strin
 			i++;
 			vector<string> sym = findSynonym(rootSYM, query[i]);
 			for (int j = 0; j < sym.size(); j++) {
-				query.push_back("OR");
+				if (j)
+					query.push_back("OR");
 				query.push_back(sym[j]);
 
 				wordToHighlight.push_back(sym[j]);
@@ -235,7 +236,7 @@ void displayTitle(vector<int>& ans, vector<string>& wordToHighlight, HANDLE& hSt
 
 		cout << "Showing results from " << pos << " to " << min(pos + 5, (int)ans.size()) << ".\n";
 		for (int i = pos; i < min(pos + 5, (int)ans.size()); i++)
-			cout << i << ". " << _title[ans[i]] << '\n';
+			cout << i << ". " << '\"' << _title[ans[i]] << '\"' << '\n';
 		cout << '\n';	
 		cout << "What would you like to do?\n";
 		cout << "0: " << "Exit.\n";
@@ -245,7 +246,7 @@ void displayTitle(vector<int>& ans, vector<string>& wordToHighlight, HANDLE& hSt
 			ok = true;
 		}	
 		for (int i = pos; i < min(pos + 5, (int)ans.size()); i++)
-			cout << ok + i - pos + 1 << ": Access post " << _title[ans[i]] << ".\n";
+			cout << ok + i - pos + 1 << ": Access post " << '\"' << _title[ans[i]] << '\"' << ".\n";
 		if (pos + 5 < (int)ans.size())
 			cout << ok + pos + 5 - pos + 1 << ": Go to next page.\n";
 		cout << '\n';
@@ -384,6 +385,7 @@ vector<int> notInclude(node *keywordNode) {
 vector<string> findSynonym(node *rootSYM, string &s) {
 	node *cur = searchTrie(rootSYM, s);
 	vector<string> res = cur -> synonym;
+	
 	return res;
 }
 
@@ -520,7 +522,8 @@ void loadData(node *root, node *rootSW, node *rootSYM) {
 		if (synonym[0] == '=') continue;
 		if (synonym[0] == 'K') { // Key
 			curKey.clear();
-			for (int i = 5; i < synonym.size(); i++) {
+			for (int i = 5; i < (int)synonym.size() - 1; i++) {
+				if (isSpecialChar(synonym[i])) continue;
 				if ('A' <= synonym[i] && synonym[i] <= 'Z') curKey += char(synonym[i] - 'A' + 'a');
 				else curKey += synonym[i];
 			}
@@ -533,10 +536,11 @@ void loadData(node *root, node *rootSW, node *rootSYM) {
 					curSym.clear();
 				}
 				else {
-					curSym += synonym[i];
+					if (isSpecialChar(synonym[i])) continue;
+					if ('A' <= synonym[i] && synonym[i] <= 'Z') curSym += synonym[i];
+					else curSym += synonym[i];
 				}	
 			}
-			insertTrie(rootSYM, curKey, curSym);
 		}
 	}
 	fSynonym.close();
