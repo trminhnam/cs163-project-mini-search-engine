@@ -8,6 +8,7 @@
 #include <fstream>
 #include <string>
 #include <time.h>
+#include <iomanip>
 using namespace std;
 
 #define RESET   "\033[0m"

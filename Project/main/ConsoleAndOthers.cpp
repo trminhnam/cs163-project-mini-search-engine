@@ -152,11 +152,18 @@ void displayHelp(HANDLE& h) {
 		system("pause");
 		return;
 	}
-	cout << "Command:\n";
 	int i = 1;
 	string line;
 	while (getline(fin, line)) {
-		cout << i << ". " << line << endl;
+		if (line == "") {
+			cout << endl;
+			continue;
+		}
+		else if (line[0] == 'I') {
+			cout << '\t' << line << endl;
+			continue;
+		}
+		cout << setw(3) << i++ << ". " << line << endl;
 	}
 	fin.close();
 	system("pause");
@@ -177,6 +184,7 @@ void printHistory(HANDLE& h) {
 	while (getline(fin, line)) {
 		if(line=="") {
 			cout << endl;
+			continue;
 			continue;
 		}
 		cout << i++ << ". " << line << endl;
