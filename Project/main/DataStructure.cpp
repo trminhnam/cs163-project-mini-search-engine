@@ -96,10 +96,6 @@ node* searchTrie(node* root, string &s) {
 			return nullptr;
 		}
 		cur = cur -> pNext[nxt];
-		if (i == s.size() - 1) 
-		{
-			return cur;
-		}
 	}
 }
 
@@ -113,4 +109,5 @@ void deleteTrie(node* root) {
 		return;
 	for (int j = 0; j < 40; j++)
 		deleteTrie(root->pNext[j]);
+	delete root;
 }
