@@ -18,8 +18,10 @@ string queryInput(HANDLE& hStdout) {
 	//system("pause");
 
 	char c;
+	bool isInHistory = false;
 	while ((c = _getch()) && c!= '\r' && (int)c!=27) {
 		//backspace is 8 and cannot input blank space at beginnning
+		isInHistory = false;
 		if (query.size() == 0 && (c == 8 || c == ' ')) {
 			clearHistoryConsole(hStdout, inputCoord);
 			SetConsoleCursorPosition(hStdout, inputCoord);
@@ -49,7 +51,7 @@ string queryInput(HANDLE& hStdout) {
 		//Print History
 		SetConsoleCursorPosition(hStdout, printCoord);
 		if(query!="")
-			historyProcessing(hStdout, query);
+			historyProcessing(hStdout, query, isInHistory);
 
 		//Set cursor back to input place
 		SetConsoleCursorPosition(hStdout, inputCoord);
@@ -66,7 +68,7 @@ string queryInput(HANDLE& hStdout) {
 	SetConsoleCursorPosition(hStdout, inputCoord);
 	
 	//Add new raw query to history.txt for later searching
-	if (query != "exit()" && query!=" " && query!="" && query!="help()" && query!="clearHistory()" && query!="viewHistory()") {
+	if (!isInHistory && query != "exit()" && query!=" " && query!="" && query!="help()" && query!="clearHistory()" && query!="viewHistory()") {
 		ofstream fout("history.txt", ios::app);
 		if (fout.is_open()) {
 			fout << query << endl;
@@ -116,7 +118,7 @@ COORD GetConsoleCursorPosition(HANDLE& hConsoleOutput)
 	}
 }
 
-void historyProcessing(HANDLE& hStdout, string& rawQuery) {
+void historyProcessing(HANDLE& hStdout, string& rawQuery, bool& isInHistory) {
 	ifstream fin("history.txt");
 	if (!fin.is_open()){
 		cout << "Error... No history file.\n";
@@ -125,8 +127,12 @@ void historyProcessing(HANDLE& hStdout, string& rawQuery) {
 	string line;
 	int cnt = 0;
 	while (getline(fin, line) && cnt<10) {
+		if(line==rawQuery){
+			isInHistory = true;
+			continue;
+		}
 
-		if (line != rawQuery && line.find(rawQuery)==0) {
+		if (line.find(rawQuery)==0) {
 			if(cnt==0)
 				cout << "History suggestion:\n";
 			cout << ++cnt << ". " << line << endl;
