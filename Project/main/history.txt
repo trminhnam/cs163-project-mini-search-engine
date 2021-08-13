@@ -30,3 +30,8 @@ dog
 Manchester -United
 ~Abnormal
 ~die
+Software AND Engineer
+Cat OR Dog
+Samsung OR Apple
+$50.$300
+$99

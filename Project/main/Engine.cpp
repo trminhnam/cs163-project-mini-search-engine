@@ -218,6 +218,8 @@ vector<int> querySearching(node *root, node *rootSW, node *rootSYM, vector<strin
 
 	}
 
+	sort(ans.begin(), ans.end());
+	ans.resize(unique(ans.begin(), ans.end()) - ans.begin());	
 	displayTitle(ans, wordToHighlight, hStdout);
 
 	return ans;
@@ -290,10 +292,10 @@ void displayFile(ifstream &fIn, HANDLE& hStdout) {
 }
 
 void displayFile(ifstream& fIn, vector<string>& wordToHighlight, HANDLE& hStdout) {
-	for (int i = 0; i < wordToHighlight.size(); i++)
-		cout << wordToHighlight[i] << endl;
-	cout << endl;
-	system("cls");
+//	for (int i = 0; i < wordToHighlight.size(); i++)
+//		cout << wordToHighlight[i] << endl;
+//	cout << endl;
+//	system("cls");
 	heading(hStdout);
 	
 	string s, tmp;
