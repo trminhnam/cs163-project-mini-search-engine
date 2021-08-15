@@ -51,5 +51,5 @@ vector<int> inTitle(node* root, string &s);
 vector<int> notInclude(node* keywordNode);
 vector<string> findSynonym(node *rootSYM, string &s);
 vector<int> findExact(node* root, vector<string> &exactMatch);
-
+void displayF(ifstream& fIn, HANDLE& hStdout);
 #endif // !_ENGINE_H_
