@@ -3,7 +3,7 @@
 #include "ConsoleAndOthers.h"
 
 
-//-----------------------------------------------------------
+//----------------------------------------------------------
 vector<string> _title;
 
 // Check correct char
@@ -16,17 +16,13 @@ char specialChar[N_speicalChar] = { '+',',',';','\t',
 						'^','_','\\','-', '.', '\'' };
 
 bool isCorrectChar(char& c, string& s) {
-	if (c == '-' && s == "")
-		return true;
-	else if (c == ':' && s == "intitle")
-		return true;
-	else if (c == '+' && s == "")
-		return true;
-	else if (c == '~' && s == "")
-		return true;
-	else if (c == '#' && s == "")
-		return true;
-	for (int i = 0; i < N_speicalChar; i++) {
+	if (c == '-' && s == "") return true;
+	else if (c == ':' && s == "intitle") return true;
+	else if (c == '+' && s == "") return true;
+	else if (c == '~' && s == "") return true;
+	else if (c == '#' && s == "") return true;
+	for (int i = 0; i < N_speicalChar; i++) 
+	{
 		if (c == specialChar[i])
 			return false;
 	}
@@ -39,8 +35,9 @@ bool isCorrectChar(char& c, string& s) {
 // Query processing
 
 
-string correctQueryWord(string& s){
-	//Lower the word
+string correctQueryWord(string& s)
+{
+	//Lower the words
 	transform(s.begin(), s.end(), s.begin(), ::tolower);
 
 	return "";
@@ -49,10 +46,10 @@ string correctQueryWord(string& s){
 // Check range money query
 bool isRangeMoney(string& s) {
 	int cnt = 0, n = s.length();
-	for (int i = 0; i < n; i++) {
-		if (s[i] == '$')
+	for (int j = 0; j < n; j++) {
+		if (s[j] == '$')
 			cnt++;
-		else if ((s[i] < '0' || s[i] > '9') && s[i] != '#')
+		else if ((s[j] < '0' || s[j] > '9') && s[j] != '#')
 			return false;
 	}
 	return cnt == 2;
@@ -108,7 +105,7 @@ vector<int> querySearching(node *root, node *rootSW, node *rootSYM, vector<strin
 	vector<int> notInc;
 	vector<string> exactMatch;
 	
-	vector<string> wordToHighlight;	//use this vector for output
+	vector<string> wordToHighlight;	 //use this vector for output
 
 	//Initialize res vector
 	for (int i = 0; i < 11368; i++) ans.push_back(i);
@@ -121,25 +118,25 @@ vector<int> querySearching(node *root, node *rootSW, node *rootSYM, vector<strin
 		if (query[i] == "*") continue;
 
 		// "a and b"
-		if(query[i][0]=='\"' || completeWord){
+		if (query[i][0] == '\"' || completeWord) {
 			completeWord = true;
 			//"a
-			if(query[i][0]=='\"') // remove first character which is '\"'
+			if (query[i][0] == '\"') // remove first character which is '\"'
 				query[i] = query[i].substr(1, query[i].size() - 1);
 			//b"
-			if(query[i][query[i].size()-1]=='\"'){
+			if (query[i][query[i].size() - 1] == '\"') {
 				completeWord = false;
 				query[i].pop_back(); //remove final character which is '\"'
 			}
 
-			//Searching for the next words
+			//Searching for the next word
 
 			exactMatch.push_back(query[i]);
 			wordToHighlight.push_back(query[i]);
 
 			if (!completeWord) {
 				vector<int> curQuery = findExact(root, exactMatch);
-				ans = getIntersection(ans, curQuery);
+				ans =  getIntersection(ans, curQuery);
 				exactMatch.clear();
 			}
 
@@ -208,9 +205,8 @@ vector<int> querySearching(node *root, node *rootSW, node *rootSYM, vector<strin
 			}
 			ans = getIntersection(ans, curQuery);
 		}
-		// Normal query, including and query and money query
-		// $200
-		// handbag $200
+		// Normal query, including and query and money of query
+		// handbag price  $200
 		else {
 			ans = AndOperator(ans, searchTrie(root, query[i])); 
 			wordToHighlight.push_back(query[i]);
@@ -226,7 +222,7 @@ vector<int> querySearching(node *root, node *rootSW, node *rootSYM, vector<strin
 	return ans;
 }
 
-// Display Data
+// Display data
 
 
 void displayTitle(vector<int>& answer, vector<string>& wordToHighlight, HANDLE& hStdout) {
@@ -251,9 +247,9 @@ void displayTitle(vector<int>& answer, vector<string>& wordToHighlight, HANDLE& 
 		for (int i = pos; i < min(pos + 5, (int)answer.size()); i++)
 			cout << ok + i - pos + 1 << ": Access post " << '\"' << _title[answer[i]] << '\"' << ".\n";
 		if (pos + 5 < (int)answer.size())
-			cout << ok + pos + 5 - pos + 1 << ": Go to next page.\n";
+			cout << ok + pos + 5 - pos + 1 << ": Go to next page. \n";
 		cout << '\n';
-		cout << "Please input your choice:\n";
+		cout << "Please input your choice: \n";
 		int r; cin >> r;
 		if (r == 0) {
 			system("cls");
@@ -515,7 +511,8 @@ void loadData(node *root, node *rootSW, node *rootSYM) {
 			if ('A' <= stopword[i] && stopword[i] <= 'Z') tmp += char(stopword[i] - 'A' + 'a');
 			else tmp += stopword[i];
 		}	
-		insertTrie(rootSW, tmp); // insert stopword into trie		
+		insertTrie(rootSW, tmp); 
+		// insert stopword into trie		
 	}
 	fStopword.close();
 

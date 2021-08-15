@@ -106,7 +106,7 @@ node* searchTrie(node* root, string &s) {
 void deleteTrie(node* root) {
 	if (!root)
 		return;
-	for (int i = 0; i < 40; i++)
-		deleteTrie(root->pNext[i]);
+	for (int j = 0; j < 40; j++)
+		deleteTrie(root->pNext[j]);
 	delete root;
 }
