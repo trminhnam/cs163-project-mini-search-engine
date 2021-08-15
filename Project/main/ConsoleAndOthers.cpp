@@ -92,7 +92,6 @@ void clearHistoryConsole(HANDLE& h, COORD start) {
 	//cout << rows << endl;
 	//cout << start.Y << endl;
 	//system("pause");
-	//--
 
 	string tmp = "";
 	for (int i = 0; i < columns; i++)
