@@ -545,15 +545,7 @@ void loadData(node *root, node *rootSW, node *rootSYM) {
 	}
 	fSynonym.close();
 }
-void displayF(ifstream& fIn, HANDLE& hStdout) {
-	system("cls");
-	heading(hStdout);
-	string s;
-	while (getline(fIn, s))
-		cout << s << '\n';
-	fIn.close();
-	system("pause");
-}
+
 
 
 //===========================================================================
