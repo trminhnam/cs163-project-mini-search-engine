@@ -43,8 +43,10 @@ int main() {
 		
 		s = queryInput(hStdout);
 
-		if (s == "") continue;
-		else if (s == "exit()") break;
+		if (s == "") 
+			continue;
+		else if (s == "exit()") 
+			break;
 		else if (s == "help()") {
 			displayHelp(hStdout);
 			continue;

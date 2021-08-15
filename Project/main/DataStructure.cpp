@@ -94,7 +94,6 @@ node* searchTrie(node* root, string &s) {
 	}
 }
 
-// Nem ngu ngok has written the below lines
 // use for seaching
 
 
