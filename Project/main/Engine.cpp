@@ -38,8 +38,7 @@ bool isCorrectChar(char& c, string& s) {
 
 // Query processing
 
-//Ham nay ngu lam :'(
-//Chua viet xong
+
 string correctQueryWord(string& s){
 	//Lower the word
 	transform(s.begin(), s.end(), s.begin(), ::tolower);

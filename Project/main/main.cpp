@@ -63,10 +63,10 @@ int main() {
 		query = queryProcessing(s);
 
 		//Debug for inputting query, will be deleted before submitting
-		cout << "This output query after splitting is only for debugging, we will delete before submitting.\n";
+		/*cout << "This output query after splitting is only for debugging, we will delete before submitting.\n";
 		for (int i = 0; i < query.size(); i++)
 			cout << "\"" << Color(11) << query[i] << Color(7) << "\"" << endl;
-		cout << endl;
+		cout << endl;*/
 		//-------------
 
 		system("pause");
