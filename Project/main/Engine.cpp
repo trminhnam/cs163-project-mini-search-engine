@@ -189,7 +189,9 @@ vector<int> querySearching(node *root, node *rootSW, node *rootSYM, vector<strin
 			for (int i1 = 1; ; i1++) {
 				if (query[i][i1] == '$') {
 					for (int i2 = i1 + 1; i2 < query[i].size(); i2++)
+					{
 						s2 += query[i][i2];
+					}
 					break;
 				}
 				else s1 += query[i][i1];
@@ -228,51 +230,51 @@ vector<int> querySearching(node *root, node *rootSW, node *rootSYM, vector<strin
 // Display Data
 
 
-void displayTitle(vector<int>& ans, vector<string>& wordToHighlight, HANDLE& hStdout) {
-  
+void displayTitle(vector<int>& answer, vector<string>& wordToHighlight, HANDLE& hStdout) {
+
 	int pos = 0;
 	while (1) {
 		system("cls");
 		heading(hStdout);
-		cout << "There are a total of " << ans.size() << " results.\n\n";
+		cout << "There are a total of " << answer.size() << " results.\n\n";
 
-		cout << "Showing results from " << pos << " to " << min(pos + 5, (int)ans.size()) << ".\n";
-		for (int i = pos; i < min(pos + 5, (int)ans.size()); i++)
-			cout << i << ". " << '\"' << _title[ans[i]] << '\"' << '\n';
-		cout << '\n';	
+		cout << "Showing results from " << pos << " to " << min(pos + 5, (int)answer.size()) << ".\n";
+		for (int i = pos; i < min(pos + 5, (int)answer.size()); i++)
+			cout << i << ". " << '\"' << _title[answer[i]] << '\"' << '\n';
+		cout << '\n';
 		cout << "What would you like to do?\n";
 		cout << "0: " << "Exit.\n";
 		bool ok = false;
 		if (pos) {
 			cout << "1: " << "Go to previous page.\n";
 			ok = true;
-		}	
-		for (int i = pos; i < min(pos + 5, (int)ans.size()); i++)
-			cout << ok + i - pos + 1 << ": Access post " << '\"' << _title[ans[i]] << '\"' << ".\n";
-		if (pos + 5 < (int)ans.size())
+		}
+		for (int i = pos; i < min(pos + 5, (int)answer.size()); i++)
+			cout << ok + i - pos + 1 << ": Access post " << '\"' << _title[answer[i]] << '\"' << ".\n";
+		if (pos + 5 < (int)answer.size())
 			cout << ok + pos + 5 - pos + 1 << ": Go to next page.\n";
 		cout << '\n';
 		cout << "Please input your choice:\n";
-  		int r; cin >> r;
-  		if (r == 0) {
-  			system("cls");
+		int r; cin >> r;
+		if (r == 0) {
+			system("cls");
 			heading(hStdout);
-  			getchar();
-  			break;
-  		}	
-  		else if (pos && r == 1) {
-  			system("cls");
+			getchar();
+			break;
+		}
+		else if (pos && r == 1) {
+			system("cls");
 			heading(hStdout);
-  			pos -= 5;
-  			continue;
-  		}
-  		else if (pos + 5 < (int)ans.size() && r == ok + pos + 5 - pos + 1) {
-  			pos += 5;
-  			continue;
-  		}
-		for (int i = pos; i < min(pos + 5, (int)ans.size()); i++)
+			pos -= 5;
+			continue;
+		}
+		else if (pos + 5 < (int)answer.size() && r == ok + pos + 5 - pos + 1) {
+			pos += 5;
+			continue;
+		}
+		for (int i = pos; i < min(pos + 5, (int)answer.size()); i++)
 			if (r == ok + i - pos + 1) {
-				ifstream fIn; fIn.open(("Search-Engine-Data\\" + _title[ans[i]] + ".txt").c_str());
+				ifstream fIn; fIn.open(("Search-Engine-Data\\" + _title[answer[i]] + ".txt").c_str());
 
 				displayFile(fIn, wordToHighlight, hStdout);
 
