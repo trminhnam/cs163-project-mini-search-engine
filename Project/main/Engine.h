@@ -36,7 +36,7 @@ vector<int> querySearching(node *root, node *rootSW, node *rootSYM, vector<strin
 
 // Display
 
-void displayTitle(vector<int>& ans, vector<string>& wordToHighlight, HANDLE& hStdout);
+void displayTitle(vector<int>& answer, vector<string>& wordToHighlight, HANDLE& hStdout);
 void displayFile(ifstream& fIn, vector<string>& wordToHighlight, HANDLE& hStdout);
 
 
