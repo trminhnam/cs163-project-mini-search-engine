@@ -37,8 +37,9 @@ int main() {
 
 	while (1) {
 		heading(hStdout);
+		cout << "If you use this program the first time, for instruction, type \"help()\".\n";
 		cout << "Please input what you'd like to search below: \n";
-		cout << "If you use this program the first time, type \"help()\".\n";
+		
 		//getline(cin, s);
 		
 		s = queryInput(hStdout);
