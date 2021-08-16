@@ -562,7 +562,7 @@ void addFile(node *root, string title) {
 	}	
 	insertTrie(root, tmp, _title.size() - 1); // insert title into the trie
 
-	ifstream fData(("Search-Engine-Data\\" + title + ".txt").c_str());
+	ifstream fData((title + ".txt").c_str());
 	string data;
 	int cur = 0;
 	while (fData >> data) {
