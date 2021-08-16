@@ -3,7 +3,7 @@ exit():              Exit our program
 help():              Display command and query that our program supports
 viewHistory():       See all the history you have searched
 clearHistory():      Clear all the previous history
-
+addFile()			 Add a new txt data file into our search engine data
 
 II. Query:
 "AND" query:         keyword1 AND keyword2

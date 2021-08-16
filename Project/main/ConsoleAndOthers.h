@@ -55,7 +55,7 @@ void historyProcessing(HANDLE& hStdout, string& rawQuery, bool& isInHistory);
 void displayHelp(HANDLE& h);
 void printHistory(HANDLE& h);
 void clearHistory(HANDLE& h);
-
+void addFileFunction(HANDLE& h, node* root);
 
 
 //Heading
