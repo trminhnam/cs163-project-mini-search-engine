@@ -20,6 +20,22 @@ int _valChar(char c) {
 	return 0;
 }
 
+void insertTrie(node*& root, string &s) {
+	/*
+		Insert a string into the trie
+		root: Root node of the Trie
+		string s: The word to be inserted
+	*/
+	node *cur = root;
+	for (int i = 0; i < s.size(); i++) {
+		char c = s[i]; int nxt = _valChar(c);
+		if (!cur -> pNext[nxt]) cur -> pNext[nxt] = new node();
+		cur = cur -> pNext[nxt];
+
+		if (i == s.size() - 1)
+			cur -> end = true;
+	}
+}
 
 void insertTrie(node*& root, string &s, int curArticle) {
 	/*
