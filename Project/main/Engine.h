@@ -25,6 +25,7 @@ using namespace std;
 
 bool isSpecialChar(char& c);
 void loadData(node *root, node *rootSW, node *rootSYM);
+void addFile(node *root, string title);
 
 // String processing
 
