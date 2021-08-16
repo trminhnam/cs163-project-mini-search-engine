@@ -206,6 +206,3 @@ void clearHistory(HANDLE& h) {
 	cout << "Delete history successfully.\n";
 	system("pause");
 }
-void loading() {
-
-}
