@@ -113,5 +113,4 @@ void deleteTrie(node* root) {
 		return;
 	for (int j = 0; j < 40; j++)
 		deleteTrie(root->pNext[j]);
-	delete root;
 }
