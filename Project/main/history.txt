@@ -1,0 +1,25 @@
+cat
+panda
+hamster
+hare
+hawk
+horse
+cow
+crab
+ant
+ape
+donkey
+wolf
+zebra
+polar bear
+samsung
+apple
+mouse
+moth
+fish
+fly
+dog
+dolphin
+dove
+tiger
+
