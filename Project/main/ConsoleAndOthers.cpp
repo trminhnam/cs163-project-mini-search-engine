@@ -1,4 +1,5 @@
 #include "ConsoleAndOthers.h"
+#include "Engine.h"
 
 string queryInput(HANDLE& hStdout) {
 	COORD inputCoord, printCoord;
@@ -68,7 +69,7 @@ string queryInput(HANDLE& hStdout) {
 	SetConsoleCursorPosition(hStdout, inputCoord);
 	
 	//Add new raw query to history.txt for later searching
-	if (!isInHistory && query != "exit()" && query!=" " && query!="" && query!="help()" && query!="clearHistory()" && query!="viewHistory()") {
+	if (!isInHistory && query != "exit()" && query!=" " && query!="" && query!="help()" && query!="clearHistory()" && query!="viewHistory()" && query!="addFile()") {
 		ofstream fout("history.txt", ios::app);
 		if (fout.is_open()) {
 			fout << query << endl;
@@ -205,4 +206,24 @@ void clearHistory(HANDLE& h) {
 	fout.close();
 	cout << "Delete history successfully.\n";
 	system("pause");
+}
+
+void addFileFunction(HANDLE& h, node* root) {
+	heading(h);
+
+	string filename;
+	std::cout << "Enter your text file name (NOT including the file extension): ";
+	std::cin >> filename;
+
+	ifstream fin(filename);
+	if (!fin.is_open()) {
+		cout << "Cannot open " << filename << " to load into our data.\n";
+		return;
+	}
+	fin.close();
+
+	addFile(root, filename);
+	cout << "Data load successfully.\n";
+
+
 }
