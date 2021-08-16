@@ -92,7 +92,6 @@ void clearHistoryConsole(HANDLE& h, COORD start) {
 	//cout << rows << endl;
 	//cout << start.Y << endl;
 	//system("pause");
-	//--
 
 	string tmp = "";
 	for (int i = 0; i < columns; i++)
@@ -125,17 +124,17 @@ void historyProcessing(HANDLE& hStdout, string& rawQuery, bool& isInHistory) {
 		return;
 	}
 	string line;
-	int cnt = 0;
-	while (getline(fin, line) && cnt<10) {
+	int num = 0;
+	while (getline(fin, line) && num<10) {
 		if(line==rawQuery){
 			isInHistory = true;
 			continue;
 		}
 
 		if (line.find(rawQuery)==0) {
-			if(cnt==0)
+			if(num==0)
 				cout << "History suggestion:\n";
-			cout << ++cnt << ". " << line << endl;
+			cout << ++num << ". " << line << endl;
 		}
 	}
 	fin.close();

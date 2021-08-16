@@ -63,7 +63,7 @@ inline void heading(HANDLE& hStdout) {
 	system("cls");
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
 	int columns = 172, rows = 45;
-	
+
 	GetConsoleScreenBufferInfo(hStdout, &csbi);
 	columns = csbi.srWindow.Right - csbi.srWindow.Left + 1;
 	rows = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;

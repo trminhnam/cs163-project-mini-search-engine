@@ -23,6 +23,7 @@ int main() {
 	cerr << "LOADING DONE!!\n";
 	clock_t endTime = clock();
 	cout << "Loading data time: " << (double)(endTime - startTime) / CLOCKS_PER_SEC << " seconds.\n";
+
 	system("pause");
 
 	//This main function is for testing input query
@@ -36,14 +37,17 @@ int main() {
 
 	while (1) {
 		heading(hStdout);
+		cout << "If you use this program the first time, for instruction, type \"help()\".\n";
 		cout << "Please input what you'd like to search below: \n";
-		cout << "If you use this program the first time, type \"help()\".\n";
+		
 		//getline(cin, s);
 		
 		s = queryInput(hStdout);
 
-		if (s == "") continue;
-		else if (s == "exit()") break;
+		if (s == "") 
+			continue;
+		else if (s == "exit()") 
+			break;
 		else if (s == "help()") {
 			displayHelp(hStdout);
 			continue;
@@ -60,10 +64,10 @@ int main() {
 		query = queryProcessing(s);
 
 		//Debug for inputting query, will be deleted before submitting
-		cout << "This output query after splitting is only for debugging, we will delete before submitting.\n";
+		/*cout << "This output query after splitting is only for debugging, we will delete before submitting.\n";
 		for (int i = 0; i < query.size(); i++)
 			cout << "\"" << Color(11) << query[i] << Color(7) << "\"" << endl;
-		cout << endl;
+		cout << endl;*/
 		//-------------
 
 		system("pause");

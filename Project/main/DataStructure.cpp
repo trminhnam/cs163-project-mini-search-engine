@@ -5,16 +5,19 @@
 
 int _valChar(char c) {
 	int cur = 0;
-	if ('0' <= c && c <= '9') return c - '0' + cur;
+	if ('0' <= c && c <= '9') 
+		return c - '0' + cur;
 	cur += 10;
-	if ('a' <= c && c <= 'z') return c - 'a' + cur;
+	if ('a' <= c && c <= 'z') 
+		return c - 'a' + cur;
 	cur += 26;
-	if (c == '#') return cur;
+	if (c == '#') 
+		return cur;
 	cur++;
-	if (c == '$') return cur;
+	if (c == '$') 
+		return cur;
 
 	return 0;
-	// If reach this state, then c is lmao
 }
 
 void insertTrie(node*& root, string &s) {
@@ -80,7 +83,6 @@ void insertTrie(node*& root, string &s, string &synonym) {
 		char c = s[i]; int nxt = _valChar(c);
 		if (!cur -> pNext[nxt]) cur -> pNext[nxt] = new node();
 		cur = cur -> pNext[nxt];
-
 		if (i == s.size() - 1) cur -> synonym.push_back(synonym);		
 	}
 }
@@ -89,21 +91,27 @@ node* searchTrie(node* root, string &s) {
 	node *cur = root;	
 	for (int i = 0; i < s.size(); i++) {
 		char c = s[i]; int nxt = _valChar(c);
-		if (!cur -> pNext[nxt]) return nullptr;
+		if (!cur->pNext[nxt])
+		{
+			return nullptr;
+		}
 		cur = cur -> pNext[nxt];
-
-		if (i == s.size() - 1) return cur;
+		if (i == s.size() - 1) 
+		{
+			return cur;
+		}
 	}
 }
 
-// Nem ngu ngok has written the below lines
 // use for seaching
+
+
 
 
 void deleteTrie(node* root) {
 	if (!root)
 		return;
-	for (int i = 0; i < 40; i++)
-		deleteTrie(root->pNext[i]);
+	for (int j = 0; j < 40; j++)
+		deleteTrie(root->pNext[j]);
 	delete root;
 }
