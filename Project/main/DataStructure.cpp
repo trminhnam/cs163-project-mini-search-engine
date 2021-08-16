@@ -96,6 +96,10 @@ node* searchTrie(node* root, string &s) {
 			return nullptr;
 		}
 		cur = cur -> pNext[nxt];
+		if (i == s.size() - 1) 
+		{
+			return cur;
+		}
 	}
 }
 
