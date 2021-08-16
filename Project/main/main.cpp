@@ -60,6 +60,10 @@ int main() {
 			clearHistory(hStdout);
 			continue;
 		}
+		else if (s == "addFile()") {
+			addFileFunction(hStdout, root);
+			continue;
+		}
 
 		query = queryProcessing(s);
 
