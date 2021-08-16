@@ -1,6 +1,7 @@
 cat
 panda
 hamster
+hammer
 hare
 hawk
 horse
@@ -24,3 +25,20 @@ dove
 tiger
 elephant
 racoon
+~set
+~cat
+cat OR dog
+samsung OR apple
+eggs
+intitle:nuclear
+intitle:human
+"software engineer"
+"giant panda"
+manchester -united
+"manchester united"
+long
+"long long"
+intitle:long
+0
+"long long long long"
+"long"

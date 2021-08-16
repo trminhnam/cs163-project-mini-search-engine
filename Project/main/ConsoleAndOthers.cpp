@@ -1,3 +1,4 @@
+#include "DataStructure.h"
 #include "ConsoleAndOthers.h"
 #include "Engine.h"
 
@@ -212,7 +213,7 @@ void addFileFunction(HANDLE& h, node* root) {
 	heading(h);
 
 	string filename;
-	std::cout << "Enter your text file name (NOT including the file extension): ";
+	std::cout << "Enter your text file name (including the file extension): ";
 	std::cin >> filename;
 
 	ifstream fin(filename);
@@ -225,5 +226,5 @@ void addFileFunction(HANDLE& h, node* root) {
 	addFile(root, filename);
 	cout << "Data load successfully.\n";
 
-
+	system("pause");
 }

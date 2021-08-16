@@ -271,6 +271,7 @@ void displayTitle(vector<int>& answer, vector<string>& wordToHighlight, HANDLE& 
 		for (int i = pos; i < min(pos + 5, (int)answer.size()); i++)
 			if (r == ok + i - pos + 1) {
 				ifstream fIn; fIn.open(("Search-Engine-Data\\" + _title[answer[i]] + ".txt").c_str());
+				if (!fIn.is_open()) fIn.open((_title[answer[i]] + ".txt").c_str());
 
 				displayFile(fIn, wordToHighlight, hStdout);
 
@@ -403,6 +404,7 @@ vector<int> findExact(node *root, vector<string> &exactMatch) {
 	vector<int> ans;
 	for (int i = 0; i < cur.size(); i++) {
 		ifstream fIn(("Search-Engine-Data\\" + _title[cur[i]] + ".txt").c_str());
+		if (!fIn.is_open()) fIn.open((_title[cur[i]] + ".txt").c_str());
 		string s;
 		vector<string> curLine;
 		while (fIn >> s) {
@@ -548,6 +550,8 @@ void loadData(node *root, node *rootSW, node *rootSYM) {
 }
 
 void addFile(node *root, string title) {
+	for (int i = 0; i < 4; i++)
+		title.pop_back();
 	_title.push_back(title);
 	string tmp;
 	for (int i = 0; i < title.size(); i++) {
