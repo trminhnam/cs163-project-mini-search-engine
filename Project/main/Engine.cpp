@@ -109,7 +109,7 @@ vector<int> querySearching(node *root, node *rootSW, node *rootSYM, vector<strin
 	vector<string> wordToHighlight;	 //use this vector for output
 
 	//Initialize res vector
-	for (int i = 0; i < 11368; i++) ans.push_back(i);
+	for (int i = 0; i < _title.size(); i++) ans.push_back(i);
 
 	
 	bool completeWord = false; //For query case "a and b"
