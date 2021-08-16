@@ -8,6 +8,7 @@ vector<string> _title;
 
 // Check correct char
 const int N_speicalChar = 34;
+
 char specialChar[N_speicalChar] = { '+',',',';','\t',
 						'\0','\f','\v','\n','\r',
 						'!','{', '}','"','(', ')',
@@ -546,6 +547,20 @@ void loadData(node *root, node *rootSW, node *rootSYM) {
 	fSynonym.close();
 }
 
+
+//-------------------------
+bool checkRangeMoney(string& s) {
+	int t = 0, len = s.length();
+
+	for (int j = 0; j < len; j++) 
+	{
+		if (s[j] == '$')
+			t++;
+		else if ((s[j] < '0' || s[j] > '9') && s[j] != '#')
+			return false;
+	}
+	return (t == 2);
+}
 
 
 //===========================================================================

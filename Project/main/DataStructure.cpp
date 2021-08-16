@@ -5,16 +5,19 @@
 
 int _valChar(char c) {
 	int cur = 0;
-	if ('0' <= c && c <= '9') return c - '0' + cur;
+	if ('0' <= c && c <= '9') 
+		return c - '0' + cur;
 	cur += 10;
-	if ('a' <= c && c <= 'z') return c - 'a' + cur;
+	if ('a' <= c && c <= 'z') 
+		return c - 'a' + cur;
 	cur += 26;
-	if (c == '#') return cur;
+	if (c == '#') 
+		return cur;
 	cur++;
-	if (c == '$') return cur;
+	if (c == '$') 
+		return cur;
 
 	return 0;
-	// If reach this state, then c is lmao
 }
 
 void insertTrie(node*& root, string &s) {
@@ -101,6 +104,8 @@ node* searchTrie(node* root, string &s) {
 }
 
 // use for seaching
+
+
 
 
 void deleteTrie(node* root) {
