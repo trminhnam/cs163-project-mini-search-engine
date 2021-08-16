@@ -36,7 +36,7 @@ vector<int> querySearching(node *root, node *rootSW, node *rootSYM, vector<strin
 
 // Display
 
-void displayTitle(vector<int>& ans, vector<string>& wordToHighlight, HANDLE& hStdout);
+void displayTitle(vector<int>& answer, vector<string>& wordToHighlight, HANDLE& hStdout);
 void displayFile(ifstream& fIn, vector<string>& wordToHighlight, HANDLE& hStdout);
 
 
@@ -51,5 +51,6 @@ vector<int> inTitle(node* root, string &s);
 vector<int> notInclude(node* keywordNode);
 vector<string> findSynonym(node *rootSYM, string &s);
 vector<int> findExact(node* root, vector<string> &exactMatch);
+bool checkRangeMoney(string& s);
 
 #endif // !_ENGINE_H_
