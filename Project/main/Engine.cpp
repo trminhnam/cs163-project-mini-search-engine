@@ -547,6 +547,35 @@ void loadData(node *root, node *rootSW, node *rootSYM) {
 	fSynonym.close();
 }
 
+void addFile(node *root, string title) {
+	_title.push_back(title);
+	string tmp;
+	for (int i = 0; i < title.size(); i++) {
+		if (isSpecialChar(title[i]))
+			continue;
+		if ('A' <= title[i] && title[i] <= 'Z') tmp += char(title[i] - 'A' + 'a');
+		else if (title[i] == ' '){
+			insertTrie(root, tmp, _title.size() - 1); // insert title into the trie
+			tmp.clear();
+		}
+		else tmp += title[i];
+	}	
+	insertTrie(root, tmp, _title.size() - 1); // insert title into the trie
+
+	ifstream fData(("Search-Engine-Data\\" + title + ".txt").c_str());
+	string data;
+	int cur = 0;
+	while (fData >> data) {
+		string tmp;
+		for (int i = 0; i < data.size(); i++) {
+			if (isSpecialChar(data[i])) continue;
+			if ('A' <= data[i] && data[i] <= 'Z') tmp += char(data[i] - 'A' + 'a');
+			else tmp += data[i];
+		}	
+		insertTrie(root, tmp, _title.size() - 1, cur++); // insert word into trie
+	}
+	fData.close();	
+}
 
 //-------------------------
 bool checkRangeMoney(string& s) {
